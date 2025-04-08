@@ -1,9 +1,22 @@
+using DotNetEnv;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+Env.Load();
 
 // Add services to the container.
+builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddControllersWithViews();
 
+var connectionString = builder.Configuration["DB_CONNECTION_STRING"];
+builder.Services.AddDbContext<dotNET_courseproject_CourseRegister.Data.ApplicationDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+
+
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
