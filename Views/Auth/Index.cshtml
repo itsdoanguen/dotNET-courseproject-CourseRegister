@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+
+<section class="py-5 bg-light text-center">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Chào mừng đến với trung tâm đào tạo dotNET!</h1>
+        <p class="lead mt-3">Chúng tôi cung cấp các khóa học lập trình chuyên sâu với nền tảng .NET hiện đại và đội ngũ giảng viên giàu kinh nghiệm.</p>
+        <a class="btn btn-primary btn-lg mt-4" asp-controller="Auth" asp-action="Register">Tham gia ngay</a>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="mb-4 text-center">Về chúng tôi</h2>
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p>
+                    dotNET Learning là trung tâm đào tạo chuyên nghiệp về công nghệ Microsoft .NET, giúp bạn trang bị đầy đủ kiến thức để trở thành lập trình viên Full-stack với C#, ASP.NET, Entity Framework, và hơn thế nữa.
+                </p>
+                <p>
+                    Chúng tôi cam kết mang đến:
+                </p>
+                <ul>
+                    <li>Khóa học thực chiến, bám sát nhu cầu doanh nghiệp</li>
+                    <li>Giảng viên nhiều năm kinh nghiệm thực tế</li>
+                    <li>Hỗ trợ thực tập và giới thiệu việc làm</li>
+                </ul>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="https://learn.microsoft.com/en-us/media/learn/modules/dotnet-introduction/media/intro-dotnet.png" class="img-fluid rounded shadow" alt="dotNET" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-primary text-white py-5">
+    <div class="container text-center">
+        <h2 class="mb-3">Bạn đã sẵn sàng bắt đầu hành trình học lập trình?</h2>
+        <p class="mb-4">Đăng ký tài khoản để truy cập vào kho khóa học và cộng đồng học tập của chúng tôi.</p>
+        <a class="btn btn-light btn-lg" asp-controller="Auth" asp-action="Register">Đăng ký ngay</a>
+    </div>
+</section>
