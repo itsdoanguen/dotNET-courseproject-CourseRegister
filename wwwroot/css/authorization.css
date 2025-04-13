@@ -1,0 +1,161 @@
+﻿body {
+    padding-top: 50px;
+}
+
+/* === Container rộng hơn === */
+.container {
+    max-width: 1200px;
+}
+
+/* === Hero section chỉnh khoảng cách & bố cục === */
+#home {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+    #home h1 {
+        font-size: 3.5rem;
+        letter-spacing: 1px;
+    }
+
+    #home p {
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+/* === About section chỉnh layout chữ - ảnh === */
+#about .row {
+    display: flex;
+    flex-wrap: wrap; /* Cho responsive */
+    align-items: center;
+    gap: 40px;
+}
+
+#about .col-lg-7 {
+    padding-right: 40px;
+}
+
+#about .col-lg-5 {
+    padding-left: 0;
+    text-align: center;
+}
+
+#about img {
+    max-width: 100%; /* Đảm bảo ảnh chiếm hết không gian của cột */
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Đảm bảo ảnh không bị chiếm dòng mới */
+@media (min-width: 992px) {
+    #about .col-lg-5,
+    #about .col-lg-7 {
+        flex: 0 0 auto;
+    }
+}
+
+/* === Courses cards spacing & hover === */
+#courses .card {
+    height: 100%;
+    border: none;
+    border-radius: 20px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    #courses .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+    }
+
+#courses .card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #004578;
+}
+
+#courses .card-text {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+/* === Testimonials thêm layout đẹp và spacing === */
+#testimonials blockquote {
+    background: white;
+    border-left: 5px solid #0078d4;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+}
+
+#testimonials p {
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+#testimonials footer {
+    margin-top: 15px;
+    font-size: 0.95rem;
+    color: #666;
+}
+
+/* === Contact section spacing & button === */
+#contact {
+    padding: 80px 0;
+}
+
+    #contact .btn {
+        padding: 14px 36px;
+        font-size: 1.1rem;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+    }
+
+        #contact .btn:hover {
+            background-color: #005fa3;
+        }
+
+    #contact p {
+        font-size: 1.05rem;
+        margin-bottom: 1rem;
+    }
+
+/* === Mobile responsive adjustments === */
+@media (max-width: 991px) {
+    /* Hero section adjust text size for mobile */
+    #home h1 {
+        font-size: 2.5rem;
+    }
+
+    #home p {
+        font-size: 1rem;
+    }
+
+    /* About section */
+    #about .col-lg-7,
+    #about .col-lg-5 {
+        text-align: center;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    /* Courses cards mobile adjust */
+    #courses .card {
+        margin-bottom: 30px;
+    }
+
+    #testimonials .col-md-6 {
+        margin-bottom: 30px;
+    }
+
+    /* Contact button */
+    #contact .btn {
+        font-size: 1rem;
+        padding: 12px 30px;
+    }
+}

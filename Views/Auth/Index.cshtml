@@ -3,42 +3,109 @@
     Layout = "~/Views/Shared/_LayoutAuth.cshtml";
 }
 
-<section class="py-5 bg-light text-center">
+<!-- Trang chủ -->
+<section id="home" class="py-5 text-white text-center" style="background-color: #004578;">
     <div class="container">
-        <h1 class="display-4 fw-bold">Chào mừng đến với trung tâm đào tạo dotNET!</h1>
-        <p class="lead mt-3">Chúng tôi cung cấp các khóa học lập trình chuyên sâu với nền tảng .NET hiện đại và đội ngũ giảng viên giàu kinh nghiệm.</p>
-        <a class="btn btn-primary btn-lg mt-4" asp-controller="Auth" asp-action="Register">Tham gia ngay</a>
+        <h1 class="display-4 fw-bold">Chào mừng đến với TechSkill Academy</h1>
+        <p class="lead mt-3">Nơi đào tạo IT chuyên sâu giúp bạn bứt phá sự nghiệp với công nghệ hiện đại nhất.</p>
+        <p class="mt-3">Dù bạn là người mới bắt đầu hay đã có kinh nghiệm, chúng tôi có chương trình phù hợp để giúp bạn tiến xa hơn trong sự nghiệp lập trình. Từ nền tảng vững chắc đến dự án thực tế, chúng tôi đồng hành cùng bạn.</p>
+        <a class="btn btn-light btn-lg mt-4" asp-controller="Auth" asp-action="Register">Bắt đầu ngay</a>
     </div>
 </section>
 
-<section class="py-5">
+
+<!-- Giới thiệu -->
+<section id="about" class="py-5 bg-light">
     <div class="container">
-        <h2 class="mb-4 text-center">Về chúng tôi</h2>
         <div class="row align-items-center">
-            <div class="col-md-6">
-                <p>
-                    dotNET Learning là trung tâm đào tạo chuyên nghiệp về công nghệ Microsoft .NET, giúp bạn trang bị đầy đủ kiến thức để trở thành lập trình viên Full-stack với C#, ASP.NET, Entity Framework, và hơn thế nữa.
-                </p>
-                <p>
-                    Chúng tôi cam kết mang đến:
-                </p>
-                <ul>
-                    <li>Khóa học thực chiến, bám sát nhu cầu doanh nghiệp</li>
-                    <li>Giảng viên nhiều năm kinh nghiệm thực tế</li>
-                    <li>Hỗ trợ thực tập và giới thiệu việc làm</li>
+            <!-- Chữ bên trái -->
+            <div class="col-lg-6 col-12">
+                <h2 class="mb-4 fw-bold" style="font-size: 2.2rem;">Về chúng tôi</h2>
+                <p style="font-size: 1.15rem; line-height: 1.9;">TechSkill Academy là trung tâm đào tạo công nghệ thông tin được thành lập bởi những chuyên gia hàng đầu trong ngành. Chúng tôi cam kết mang đến lộ trình học tập chuyên nghiệp, sát với thực tế tuyển dụng doanh nghiệp.</p>
+                <p style="font-size: 1.15rem; line-height: 1.9;">Tại đây, bạn sẽ được hướng dẫn bởi các mentor có kinh nghiệm thực chiến tại các công ty phần mềm lớn. Chúng tôi không chỉ đào tạo, mà còn định hướng nghề nghiệp, giúp bạn chinh phục các vị trí IT hấp dẫn.</p>
+                <ul class="mt-4" style="font-size: 1.1rem; line-height: 1.8; list-style-type: '✅ '; padding-left: 1.5rem;">
+                    <li>Khóa học thực chiến, cập nhật công nghệ mới nhất</li>
+                    <li>Giảng viên có trên 5 năm kinh nghiệm trong ngành</li>
+                    <li>Cam kết hỗ trợ thực tập và kết nối tuyển dụng</li>
+                    <li>Học viên được xây dựng portfolio cá nhân chất lượng</li>
                 </ul>
             </div>
-            <div class="col-md-6 text-center">
-                <img src="https://learn.microsoft.com/en-us/media/learn/modules/dotnet-introduction/media/intro-dotnet.png" class="img-fluid rounded shadow" alt="dotNET" />
+
+            <!-- Ảnh bên phải, nhỏ gọn -->
+            <div class="col-lg-5 text-center mt-4 mt-lg-0">
+                <img src="~/image/auth-index-logo.jpg" class="img-fluid rounded shadow" alt="TechSkill Academy"
+                     style="max-width: 85%; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);" />
             </div>
         </div>
     </div>
 </section>
 
-<section class="bg-primary text-white py-5">
-    <div class="container text-center">
-        <h2 class="mb-3">Bạn đã sẵn sàng bắt đầu hành trình học lập trình?</h2>
-        <p class="mb-4">Đăng ký tài khoản để truy cập vào kho khóa học và cộng đồng học tập của chúng tôi.</p>
-        <a class="btn btn-light btn-lg" asp-controller="Auth" asp-action="Register">Đăng ký ngay</a>
+
+
+<!-- Danh sách khóa học -->
+<section id="courses" class="py-5 text-center">
+    <div class="container">
+        <h2 class="mb-4">Các khóa học nổi bật</h2>
+        <p class="mb-5">Từ cơ bản đến nâng cao, mỗi khóa học tại TechSkill Academy được thiết kế bài bản, thực tế, phù hợp với yêu cầu tuyển dụng của doanh nghiệp hiện nay.</p>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Full-stack .NET</h5>
+                        <p class="card-text">Học cách xây dựng ứng dụng web hoàn chỉnh bằng ASP.NET Core, Razor Pages, Blazor, cùng Entity Framework Core. Phù hợp với cả sinh viên và người đi làm.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mt-3 mt-md-0">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Java Web Developer</h5>
+                        <p class="card-text">Khóa học chuyên sâu về phát triển ứng dụng web với Spring Boot, JPA, Thymeleaf, giúp bạn làm chủ backend Java nhanh chóng và hiệu quả.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mt-3 mt-md-0">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Frontend ReactJS</h5>
+                        <p class="card-text">Nắm vững kỹ năng frontend với React, Redux, React Router, và tích hợp RESTful API. Kết hợp thực hành dự án UI thật giúp bạn tự tin xin việc.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
+
+
+<!-- Feedback học viên -->
+<section id="testimonials" class="bg-light py-5 text-center">
+    <div class="container">
+        <h2 class="mb-4">Học viên nói gì về chúng tôi</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <blockquote class="blockquote">
+                    <p>"Chương trình học rõ ràng, thực tế, giúp mình phỏng vấn thành công sau 3 tháng! Mentor luôn theo sát và góp ý cụ thể từng dòng code."</p>
+                    <footer class="blockquote-footer">Minh Anh, Dev Backend tại FPT Software</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-6">
+                <blockquote class="blockquote">
+                    <p>"Giảng viên tận tâm, bài tập bám sát dự án thật. Sau khóa học mình tự tin làm CV, portfolio, và được mời phỏng vấn ngay."</p>
+                    <footer class="blockquote-footer">Hữu Đạt, Frontend Developer tại VNG</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Liên hệ -->
+<section id="contact" class="py-5 text-center" style="background-color: #e5f1fb;">
+    <div class="container">
+        <h2 class="mb-4">Liên hệ với chúng tôi</h2>
+        <p>Hãy để chúng tôi đồng hành cùng bạn trên hành trình trở thành lập trình viên chuyên nghiệp.</p>
+        <p class="mb-3">📧 Email: <strong>support@techskill.vn</strong> &nbsp;&nbsp; 📞 Hotline: <strong>0123 456 789</strong></p>
+        <a class="btn btn-primary" asp-controller="Auth" asp-action="Register">Tham gia học ngay</a>
+    </div>
+</section>
+
