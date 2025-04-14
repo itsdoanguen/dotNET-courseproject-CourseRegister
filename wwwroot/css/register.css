@@ -1,0 +1,100 @@
+﻿/* Hiệu ứng bo góc cho input và button */
+input.form-control, button.btn {
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+/* Hiệu ứng hover cho nút Đăng ký */
+button.btn-primary:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Cải tiến progress bar cho mật khẩu */
+#strengthBar {
+    height: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    background-color: #e9ecef; 
+}
+
+    #strengthBar.weak {
+        background-color: #dc3545; 
+    }
+
+    #strengthBar.medium {
+        background-color: #ffc107; 
+    }
+
+    #strengthBar.strong {
+        background-color: #28a745;
+    }
+
+
+/* Cải thiện yêu cầu mật khẩu */
+#requirementList {
+    list-style-type: none;
+    padding-left: 1.5em;
+    font-size: 0.9rem;
+    color: #dc3545;
+    margin-top: 10px;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+    #requirementList li {
+        margin-bottom: 5px;
+    }
+
+/* Hiệu ứng mờ dần cho list yêu cầu mật khẩu */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Cải thiện form-text cho mật khẩu xác nhận */
+#confirmMessage {
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    opacity: 0;
+}
+
+    #confirmMessage.text-success {
+        color: #198754;
+        opacity: 1;
+    }
+
+    #confirmMessage.text-danger {
+        color: #dc3545;
+        opacity: 1;
+    }
+
+/* Hiệu ứng nhẹ cho card container */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+/* Thêm padding và bo góc cho section */
+section {
+    border-radius: 15px;
+    padding-top: 60px; /* Đảm bảo không bị che bởi navbar */
+}
+
+/* Hiệu ứng của nút "Đăng ký" khi click */
+#submitBtn:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+

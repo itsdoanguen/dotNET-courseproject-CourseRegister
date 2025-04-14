@@ -94,7 +94,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             await _context.SaveChangesAsync();
 
             await SignIn(user);
-            return RedirectToAction("Index", "User");
+            return RedirectToAction("Index", "Student");
         }
         //GET: Auth/Login
         public IActionResult Login()

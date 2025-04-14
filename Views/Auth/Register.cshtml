@@ -2,61 +2,70 @@
 
 @{
     ViewData["Title"] = "Đăng ký tài khoản";
-    Layout = "~/Views/Shared/_LayoutAuth.cshtml"; // hoặc Layout bạn sử dụng cho trang Auth
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
 }
 
-<section class="py-5">
+<section class="py-5 bg-light min-vh-100 d-flex align-items-center">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h2 class="text-center mb-4 fw-bold">Tạo tài khoản mới</h2>
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow p-4 rounded-4">
+                    <h3 class="text-center fw-bold mb-4">Tạo tài khoản mới</h3>
+                    
+                    <form asp-action="Register" method="post" novalidate>
+                        @Html.AntiForgeryToken()
 
-                <form asp-action="Register" method="post" novalidate>
-                    @Html.AntiForgeryToken()
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
 
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label asp-for="Email" class="form-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
+                        <!-- Tên tài khoản -->
+                        <div class="mb-3">
+                            <label asp-for="UserName" class="form-label"></label>
+                            <input asp-for="UserName" class="form-control" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
 
-                    <!-- Tên tài khoản -->
-                    <div class="mb-3">
-                        <label asp-for="UserName" class="form-label"></label>
-                        <input asp-for="UserName" class="form-control" />
-                        <span asp-validation-for="UserName" class="text-danger"></span>
-                    </div>
+                        <!-- Mật khẩu -->
+                        <div class="mb-3 position-relative">
+                            <label asp-for="Password" class="form-label"></label>
+                            <input asp-for="Password" class="form-control" id="Password" type="password" />
+                            <progress id="strengthBar" value="0" max="6" class="w-100"></progress>
+                            <ul id="requirementList" class="mt-2 mb-0"></ul>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
 
-                    <!-- Mật khẩu -->
-                    <div class="mb-3">
-                        <label asp-for="Password" class="form-label"></label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
+                        <!-- Xác nhận mật khẩu -->
+                        <div class="mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label"></label>
+                            <input asp-for="ConfirmPassword" class="form-control" id="ConfirmPassword" />
+                            <div id="confirmMessage" class="form-text text-danger d-none"></div>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
 
-                    <!-- Xác nhận mật khẩu -->
-                    <div class="mb-3">
-                        <label asp-for="ConfirmPassword" class="form-label"></label>
-                        <input asp-for="ConfirmPassword" class="form-control" />
-                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                    </div>
+                        <!-- Đăng ký -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">Đăng ký</button>
+                        </div>
 
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary btn-lg">Đăng ký</button>
-                    </div>
-
-                    <div class="mt-3 text-center">
-                        <p>Đã có tài khoản? <a asp-controller="Auth" asp-action="Login">Đăng nhập</a></p>
-                    </div>
-                </form>
+                        <div class="mt-3 text-center">
+                            <p>Đã có tài khoản? <a asp-controller="Auth" asp-action="Login">Đăng nhập</a></p>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/register-validation.js" asp-append-version="true"></script>
+}
+
+@section Styles {
+    <link href="~/css/register.css" rel="stylesheet" />
 }
