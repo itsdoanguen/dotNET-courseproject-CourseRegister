@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace dotNET_courseproject_CourseRegister.ViewModels
 {
-    public class LoginViewModel : Controller
+    public class LoginViewModel
     {
         [Required]
         [Display(Name = "Tên tài khoản hoặc email")]

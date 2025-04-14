@@ -21,6 +21,8 @@ namespace dotNET_courseproject_CourseRegister.Models
 
         [Required]
         public int MaxStudents { get; set; }
+        [Required]
+        public int CurrentStudents { get; set; }
 
         [Required]
         public int Duration { get; set; }

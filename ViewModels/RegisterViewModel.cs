@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace dotNET_courseproject_CourseRegister.ViewModels
 {
-    public class RegisterViewModel : Controller
+    public class RegisterViewModel
     {
-
         [Required]
         [EmailAddress]
         public string Email { get; set; }
