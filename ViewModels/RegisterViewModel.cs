@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using dotNET_courseproject_CourseRegister.Attributes;
-using Microsoft.AspNetCore.Mvc;
 
 namespace dotNET_courseproject_CourseRegister.ViewModels
 {

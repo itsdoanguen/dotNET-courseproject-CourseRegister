@@ -29,3 +29,35 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* Custom form */
+.form-control {
+    border-radius: 12px;
+    padding: 1rem;
+    background-color: #f5f8fa;
+    border: 1px solid #d0d7de;
+}
+
+    .form-control:focus {
+        border-color: #4f8cff;
+        box-shadow: 0 0 0 0.2rem rgba(79, 140, 255, 0.25);
+    }
+
+.btn-primary {
+    background-color: #4f8cff;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: #3c7be0;
+    }
+
+/* Link hover */
+a.text-muted:hover {
+    color: #4f8cff;
+}
+
+/* Form-floating label adjustment */
+.form-floating > label {
+    padding: 0.5rem 0.75rem;
+}

@@ -5,32 +5,33 @@
     Layout = "~/Views/Shared/_LayoutAuth.cshtml";
 }
 
-<div class="d-flex justify-content-center align-items-center min-vh-100 bg-gradient" style="background: #f0f4f8;">
-    <div class="card shadow-lg p-5" style="max-width: 450px; width: 100%; border-radius: 10px; background-color: #ffffff;">
-        <h2 class="text-center mb-4 text-primary">Đăng nhập</h2>
-        <form method="post" asp-action="Login">
-            <div class="mb-4">
-                <label for="UserNameOrEmail" class="form-label">Tên tài khoản hoặc email</label>
-                <input asp-for="UserNameOrEmail" class="form-control form-control-lg" id="UserNameOrEmail" placeholder="Nhập tên tài khoản hoặc email" />
-                <span asp-validation-for="UserNameOrEmail" class="text-danger"></span>
+<div class="d-flex justify-content-center align-items-center min-vh-100" style="background: linear-gradient(to right, #6a11cb, #2575fc);">
+    <div class="card p-5 shadow-lg" style="max-width: 420px; width: 100%; border-radius: 16px; background: #fff;">
+        <h2 class="text-center mb-4 fw-bold text-primary">Đăng nhập</h2>
+        <form method="post" asp-action="Login" novalidate>
+            <div class="form-floating mb-3">
+                <input asp-for="UserNameOrEmail" class="form-control" id="UserNameOrEmail" placeholder="Tên tài khoản hoặc Email" />
+                <label for="UserNameOrEmail">Tên tài khoản hoặc Email</label>
+                <span asp-validation-for="UserNameOrEmail" class="text-danger small"></span>
             </div>
 
-            <div class="mb-4">
-                <label for="Password" class="form-label">Mật khẩu</label>
-                <input asp-for="Password" type="password" class="form-control form-control-lg" id="Password" placeholder="Nhập mật khẩu" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+            <div class="form-floating mb-3">
+                <input asp-for="Password" type="password" class="form-control" id="Password" placeholder="Mật khẩu" />
+                <label for="Password">Mật khẩu</label>
+                <span asp-validation-for="Password" class="text-danger small"></span>
             </div>
 
-            <div class="d-grid gap-2 mb-4">
-                <button type="submit" class="btn btn-primary btn-lg">Đăng nhập</button>
+            <div class="d-grid mb-4">
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill">Đăng nhập</button>
             </div>
 
-            <div class="text-center mb-3">
-                <p class="text-muted">Bạn chưa có tài khoản? <a asp-action="Register" asp-controller="Auth" class="text-decoration-none fw-bold">Đăng ký ngay</a></p>
+            <div class="text-center small mb-2">
+                <a href="#" class="text-decoration-none text-muted">Quên mật khẩu?</a>
             </div>
 
-            <div class="text-center">
-                <a href="#" class="text-muted text-decoration-none">Quên mật khẩu?</a>
+            <div class="text-center small">
+                <span class="text-muted">Bạn chưa có tài khoản?</span>
+                <a asp-action="Register" asp-controller="Auth" class="fw-bold text-primary text-decoration-none">Đăng ký ngay</a>
             </div>
         </form>
     </div>

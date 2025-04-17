@@ -1,37 +1,76 @@
-﻿/* Hiệu ứng bo góc cho input và button */
-input.form-control, button.btn {
-    border-radius: 10px;
+﻿/* General card style for registration */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 16px;
+    background: #fff;
+    padding: 30px;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+/* Input fields with improved styling */
+input.form-control {
+    border-radius: 12px;
+    padding: 1rem;
+    background-color: #f5f8fa;
+    border: 1px solid #d0d7de;
     transition: all 0.3s ease;
 }
 
-/* Hiệu ứng hover cho nút Đăng ký */
-button.btn-primary:hover {
-    background-color: #0056b3;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    input.form-control:focus {
+        border-color: #4f8cff;
+        box-shadow: 0 0 0 0.2rem rgba(79, 140, 255, 0.25);
+    }
+
+/* Input fields inside the form with floating labels */
+.form-floating > label {
+    padding: 0.5rem 0.75rem;
 }
 
-/* Cải tiến progress bar cho mật khẩu */
+/* Button */
+button.btn-primary {
+    background-color: #4f8cff;
+    border: none;
+    border-radius: 12px;
+    padding: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+    button.btn-primary:hover {
+        background-color: #3c7be0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    button.btn-primary:active {
+        transform: scale(0.98);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+/* Progress bar for password strength */
 #strengthBar {
     height: 10px;
     border-radius: 5px;
     transition: all 0.3s ease;
-    background-color: #e9ecef; 
+    background-color: #e9ecef;
 }
 
     #strengthBar.weak {
-        background-color: #dc3545; 
+        background-color: #dc3545;
     }
 
     #strengthBar.medium {
-        background-color: #ffc107; 
+        background-color: #ffc107;
     }
 
     #strengthBar.strong {
         background-color: #28a745;
     }
 
-
-/* Cải thiện yêu cầu mật khẩu */
+/* Password requirements list */
 #requirementList {
     list-style-type: none;
     padding-left: 1.5em;
@@ -46,7 +85,7 @@ button.btn-primary:hover {
         margin-bottom: 5px;
     }
 
-/* Hiệu ứng mờ dần cho list yêu cầu mật khẩu */
+/* Fade-in animation for password requirements */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -57,11 +96,11 @@ button.btn-primary:hover {
     }
 }
 
-/* Cải thiện form-text cho mật khẩu xác nhận */
+/* Confirmation message */
 #confirmMessage {
-    transition: all 0.3s ease;
     font-size: 0.9rem;
     opacity: 0;
+    transition: all 0.3s ease;
 }
 
     #confirmMessage.text-success {
@@ -74,27 +113,23 @@ button.btn-primary:hover {
         opacity: 1;
     }
 
-/* Hiệu ứng nhẹ cho card container */
-.card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Background gradient */
+section {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    padding-top: 60px; /* Avoid navbar overlap */
 }
 
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .card {
+        padding: 20px;
     }
 
-/* Thêm padding và bo góc cho section */
-section {
-    border-radius: 15px;
-    padding-top: 60px; /* Đảm bảo không bị che bởi navbar */
+    input.form-control {
+        padding: 0.8rem;
+    }
+
+    button.btn-primary {
+        padding: 1rem;
+    }
 }
-
-/* Hiệu ứng của nút "Đăng ký" khi click */
-#submitBtn:active {
-    transform: scale(0.98);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-
-

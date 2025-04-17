@@ -133,6 +133,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 ModelState.AddModelError("Password", "Mật khẩu không đúng");
                 return View(model);
             }
+
             await SignIn(user);
 
             return RedirectToAction("Index", "Auth");

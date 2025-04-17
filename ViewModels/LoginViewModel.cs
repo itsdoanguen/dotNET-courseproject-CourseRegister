@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
 
 namespace dotNET_courseproject_CourseRegister.ViewModels
 {
@@ -7,7 +6,7 @@ namespace dotNET_courseproject_CourseRegister.ViewModels
     {
         [Required]
         [Display(Name = "Tên tài khoản hoặc email")]
-        [DataType(DataType.Text)] 
+        [DataType(DataType.Text)]
         public string UserNameOrEmail { get; set; }
 
         [Required]

@@ -1,0 +1,178 @@
+﻿/* Cấu trúc tổng thể */
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Section */
+section {
+    padding: 80px 0;
+}
+
+/* Trang chủ */
+#home {
+    background: linear-gradient(to right, #004578, #2575fc);
+    color: white;
+}
+
+    #home h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+    }
+
+    #home p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+    }
+
+    #home .btn {
+        border-radius: 50px;
+        background-color: #0066cc; 
+        font-size: 1.2rem;
+        padding: 12px 30px;
+        color: white; 
+        font-weight: bold; 
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+        #home .btn:hover {
+            background-color: #00aaff; 
+            transform: translateY(-5px); 
+        }
+
+
+/* Giới thiệu */
+#about {
+    background-color: #f4f4f4;
+}
+
+    #about h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+    }
+
+    #about p {
+        font-size: 1.15rem;
+        line-height: 1.8;
+    }
+
+    #about ul {
+        font-size: 1.1rem;
+        padding-left: 20px;
+    }
+
+    #about img {
+        max-width: 100%;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+/* Khóa học */
+#courses {
+    background-color: #fff;
+    text-align: center;
+}
+
+    #courses h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #004578;
+    }
+
+.card {
+    border: none;
+    border-radius: 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #777;
+}
+
+/* Feedback học viên */
+#testimonials {
+    background-color: #f9f9f9;
+}
+
+blockquote {
+    font-size: 1.2rem;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+    blockquote footer {
+        font-size: 1rem;
+        color: #555;
+    }
+
+#testimonials .row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+/* Liên hệ */
+#contact {
+    background-color: #e5f1fb;
+    text-align: center;
+}
+
+    #contact h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #004578;
+    }
+
+    #contact p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+    }
+
+    #contact .btn {
+        font-size: 1.2rem;
+        padding: 12px 30px;
+        background-color: #004578;
+        color: white;
+        border-radius: 30px;
+        transition: background-color 0.3s ease;
+    }
+
+        #contact .btn:hover {
+            background-color: #2575fc;
+        }
+
+/* Các hiệu ứng khác */
+@media (max-width: 768px) {
+    #home h1 {
+        font-size: 2.5rem;
+    }
+
+    #home p {
+        font-size: 1rem;
+    }
+
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .col-lg-6, .col-lg-5 {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    #about h2 {
+        font-size: 1.8rem;
+    }
+}

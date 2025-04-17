@@ -1,0 +1,52 @@
+﻿/* Navbar Custom */
+.navbar {
+    background-color: #004578;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.dropdown-toggle::after {
+    display: none; /* Ẩn mũi tên mặc định */
+}
+
+/* Avatar */
+.navbar .dropdown img {
+    object-fit: cover;
+    border: 2px solid white;
+    transition: transform 0.3s ease;
+}
+
+    .navbar .dropdown img:hover {
+        transform: scale(1.1);
+    }
+
+/* Dropdown Menu */
+.dropdown-menu {
+    animation: slideDown 0.3s ease forwards;
+    transform-origin: top;
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: scaleY(0.8);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
+/* Footer */
+footer {
+    background-color: #212529;
+    color: #f8f9fa;
+}
+
+    footer a:hover {
+        text-decoration: underline;
+    }

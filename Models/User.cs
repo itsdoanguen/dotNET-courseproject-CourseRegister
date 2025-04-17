@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace dotNET_courseproject_CourseRegister.Models
 {
@@ -9,16 +8,16 @@ namespace dotNET_courseproject_CourseRegister.Models
         public int UserId { get; set; }
 
         [Required, StringLength(100)]
-        public string UserName { get; set; }
+        public required string UserName { get; set; }
 
         [Required, StringLength(100)]
-        public string Password { get; set; }
+        public required string Password { get; set; }
 
         [StringLength(100)]
         public string? FullName { get; set; }
 
         [Required, StringLength(100)]
-        public string Email { get; set; }
+        public required string Email { get; set; }
 
         [StringLength(100)]
         public string? PhoneNumber { get; set; }
