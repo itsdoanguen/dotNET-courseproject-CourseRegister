@@ -2,7 +2,7 @@
 
 namespace dotNET_courseproject_CourseRegister.ViewModels.Course
 {
-    public class CourseCreateViewModel
+    public class CourseEditorViewModel
     {
 
         [Required(ErrorMessage = "Không được để trống tên khóa học")]

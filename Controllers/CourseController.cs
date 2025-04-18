@@ -29,7 +29,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> CreateCourse(CourseCreateViewModel course)
+        public async Task<IActionResult> CreateCourse(CourseEditorViewModel course)
         {
             if (!ModelState.IsValid)
             {
@@ -58,7 +58,59 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             await _context.Courses.AddAsync(newCourse);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("ManageCourses","Admin");
+            return RedirectToAction("ManageCourses", "Admin");
+        }
+        //GET: Course/EditCourse
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult EditCourse(int id)
+        {
+            var course = _context.Courses.FirstOrDefault(c => c.CourseId == id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+            var courseViewModel = new CourseEditorViewModel
+            {
+                CourseName = course.CourseName,
+                TeacherName = course.TeacherName,
+                StartedTime = course.StartedTime,
+                Cost = course.Cost,
+                MaxStudents = course.MaxStudents,
+                Duration = course.Duration,
+                CourseDescription = course.CourseDescription
+            };
+            return View(courseViewModel);
+        }
+        //POST: Course/EditCourse
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> EditCourse(int id, CourseEditorViewModel course)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(course);
+            }
+
+            var existingCourse = _context.Courses.FirstOrDefault(c => c.CourseId == id);
+            if (existingCourse == null)
+            {
+                return NotFound();
+            }
+
+            existingCourse.CourseName = course.CourseName;
+            existingCourse.TeacherName = course.TeacherName;
+            existingCourse.StartedTime = course.StartedTime;
+            existingCourse.Cost = course.Cost;
+            existingCourse.MaxStudents = course.MaxStudents;
+            existingCourse.Duration = course.Duration;
+            existingCourse.CourseDescription = course.CourseDescription;
+
+            _context.Courses.Update(existingCourse);
+            await _context.SaveChangesAsync();
+            
+            return RedirectToAction("ManageCourses", "Admin");
         }
     }
 }
