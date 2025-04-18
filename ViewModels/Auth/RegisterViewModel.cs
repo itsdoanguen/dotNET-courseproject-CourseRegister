@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using dotNET_courseproject_CourseRegister.Attributes;
 
-namespace dotNET_courseproject_CourseRegister.ViewModels
+namespace dotNET_courseproject_CourseRegister.ViewModels.Auth
 {
     public class RegisterViewModel
     {

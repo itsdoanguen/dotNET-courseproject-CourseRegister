@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace dotNET_courseproject_CourseRegister.ViewModels
+namespace dotNET_courseproject_CourseRegister.ViewModels.Auth
 {
     public class LoginViewModel
     {

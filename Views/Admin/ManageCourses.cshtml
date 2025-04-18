@@ -1,0 +1,86 @@
+﻿@model List<dotNET_courseproject_CourseRegister.ViewModels.Admin.AdminManageCourseViewModel>
+
+@{
+    ViewData["Title"] = "Quản lý khóa học";
+	Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card shadow-sm rounded-4">
+    <div class="card-header bg-primary text-white rounded-top-4">
+        <h3 class="mb-0">Danh sách khóa học</h3>
+    </div>
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Tên khóa học</th>
+                        <th>Giảng viên</th>
+                        <th>Ngày bắt đầu</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Thời lượng (Buổi)</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        int index = 1;
+                        foreach (var course in Model)
+                        {
+                            <tr>
+                                <td>@index</td>
+                                <td>@course.CourseName</td>
+                                <td>@course.TeacherName</td>
+                                <td>@course.StartedTime.ToString("dd/MM/yyyy")</td>
+                                <td>@String.Format("{0:N0} ₫", course.Cost)</td>
+                                <td>@course.CurrentStudents / @course.MaxStudents</td>
+                                <td>@course.Duration</td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <a asp-action="EditCourse" asp-route-id="@course.CourseId" class="btn btn-sm btn-outline-primary rounded-pill px-3">Sửa</a>
+                                        <a asp-action="DeleteCourse" asp-route-id="@course.CourseId" class="btn btn-sm btn-outline-danger rounded-pill px-3"
+                                           onclick="return confirm('Bạn có chắc chắn muốn xóa khóa học này?');">Xóa</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            index++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center text-muted py-4">Không có khóa học nào.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-end mt-3">
+            <a asp-controller="Course" asp-action="CreateCourse" class="btn btn-success rounded-pill px-4 py-2">
+                + Thêm khóa học mới
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .table-hover tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+        .btn-outline-primary:hover {
+            color: #fff;
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .btn-outline-danger:hover {
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+    </style>
+}

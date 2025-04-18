@@ -1,0 +1,66 @@
+﻿@model dotNET_courseproject_CourseRegister.ViewModels.Course.CourseCreateViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Tạo khóa học mới";
+}
+
+<div class="card shadow-sm rounded-4">
+    <div class="card-header bg-primary text-white rounded-top-4">
+        <h3 class="mb-0">Tạo khóa học mới</h3>
+    </div>
+    <div class="card-body p-4">
+
+        <form asp-action="CreateCourse" method="post">
+            <div class="mb-3">
+                <label asp-for="CourseName" class="form-label"></label>
+                <input asp-for="CourseName" class="form-control rounded-3" />
+                <span asp-validation-for="CourseName" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="TeacherName" class="form-label"></label>
+                <input asp-for="TeacherName" class="form-control rounded-3" />
+                <span asp-validation-for="TeacherName" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="StartedTime" class="form-label"></label>
+                <input asp-for="StartedTime" class="form-control rounded-3" type="date" />
+                <span asp-validation-for="StartedTime" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Cost" class="form-label"></label>
+                <input asp-for="Cost" class="form-control rounded-3" />
+                <span asp-validation-for="Cost" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="MaxStudents" class="form-label"></label>
+                <input asp-for="MaxStudents" class="form-control rounded-3" />
+                <span asp-validation-for="MaxStudents" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Duration" class="form-label"></label>
+                <input asp-for="Duration" class="form-control rounded-3" />
+                <span asp-validation-for="Duration" class="text-danger small"></span>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a asp-controller="Admin" asp-action="ManageCourses" class="btn btn-secondary rounded-pill px-4">
+                    ← Quay lại
+                </a>
+                <button type="submit" class="btn btn-success rounded-pill px-4">
+                    Lưu khóa học
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

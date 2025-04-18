@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using dotNET_courseproject_CourseRegister.Data;
 using dotNET_courseproject_CourseRegister.Models;
-using dotNET_courseproject_CourseRegister.ViewModels;
+using dotNET_courseproject_CourseRegister.ViewModels.Auth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
