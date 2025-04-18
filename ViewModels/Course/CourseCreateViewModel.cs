@@ -11,6 +11,9 @@ namespace dotNET_courseproject_CourseRegister.ViewModels.Course
         [Required(ErrorMessage = "Không được để trống tên giáo viên")]
         [Display(Name = "Tên giáo viên")]
         public string TeacherName { get; set; }
+        [Required(ErrorMessage = "Không được để trống mô tả khóa học")]
+        [Display(Name = "Mô tả khóa học")]
+        public string CourseDescription { get; set; }
         [Required(ErrorMessage = "Không được để trống thời gian bắt đầu")]
         [DataType(DataType.Date)]
         [Display(Name = "Thời gian bắt đầu")]

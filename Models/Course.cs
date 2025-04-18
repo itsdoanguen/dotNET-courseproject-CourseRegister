@@ -12,6 +12,8 @@ namespace dotNET_courseproject_CourseRegister.Models
 
         [Required, StringLength(100)]
         public string TeacherName { get; set; }
+        [Required]
+        public string CourseDescription { get; set; }
 
         [Required]
         public DateTime StartedTime { get; set; }

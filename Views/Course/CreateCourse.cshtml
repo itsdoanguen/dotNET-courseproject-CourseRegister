@@ -25,6 +25,12 @@
             </div>
 
             <div class="mb-3">
+                <label asp-for="CourseDescription" class="form-label"></label>
+                <input asp-for="CourseDescription" class="form-control rounded-3" />
+                <span asp-validation-for="CourseDescription" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
                 <label asp-for="StartedTime" class="form-label"></label>
                 <input asp-for="StartedTime" class="form-control rounded-3" type="date" />
                 <span asp-validation-for="StartedTime" class="text-danger small"></span>

@@ -51,7 +51,8 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 StartedTime = course.StartedTime,
                 Cost = course.Cost,
                 MaxStudents = course.MaxStudents,
-                Duration = course.Duration
+                Duration = course.Duration,
+                CourseDescription = course.CourseDescription
             };
 
             await _context.Courses.AddAsync(newCourse);
