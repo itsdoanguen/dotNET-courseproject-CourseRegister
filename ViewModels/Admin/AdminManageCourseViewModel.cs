@@ -10,5 +10,12 @@
         public int MaxStudents { get; set; }
         public int CurrentStudents { get; set; }
         public int Duration { get; set; }
+        public CourseStatus Status { get; set; }
+
+        public enum CourseStatus
+        {
+            Active,
+            Inactive
+        }
     }
 }

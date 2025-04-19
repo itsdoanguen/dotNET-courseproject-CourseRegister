@@ -28,7 +28,15 @@ namespace dotNET_courseproject_CourseRegister.Models
 
         [Required]
         public int Duration { get; set; }
+        [Required]
+        public CourseStatus Status { get; set; } = CourseStatus.Active;
 
         public ICollection<User_Course>? EnrolledUsers { get; set; }
+
+        public enum CourseStatus
+        {
+            Active,
+            Inactive
+        }
     }
 }

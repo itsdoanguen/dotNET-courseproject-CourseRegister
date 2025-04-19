@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Quản lý khóa học";
-	Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <div class="card shadow-sm rounded-4">
@@ -21,6 +21,7 @@
                         <th>Giá</th>
                         <th>Số lượng</th>
                         <th>Thời lượng (Buổi)</th>
+                        <th>Trạng thái</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
@@ -38,6 +39,7 @@
                                 <td>@String.Format("{0:N0} ₫", course.Cost)</td>
                                 <td>@course.CurrentStudents / @course.MaxStudents</td>
                                 <td>@course.Duration</td>
+                                <td>@(course.Status == dotNET_courseproject_CourseRegister.ViewModels.Admin.AdminManageCourseViewModel.CourseStatus.Active ? "Hoạt động" : "Tạm dừng" )</td>
                                 <td>
                                     <div class="d-flex gap-2">
                                         <a asp-controller="Course" asp-action="EditCourse" asp-route-id="@course.CourseId" class="btn btn-sm btn-outline-primary rounded-pill px-3">Sửa</a>

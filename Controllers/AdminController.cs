@@ -34,6 +34,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
         {
             var courses = _context.Courses.ToList();
             var courseList = new List<AdminManageCourseViewModel>();
+
             foreach (var course in courses)
             {
                 var courseViewModel = new AdminManageCourseViewModel
@@ -45,7 +46,8 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                     Cost = course.Cost,
                     MaxStudents = course.MaxStudents,
                     CurrentStudents = course.CurrentStudents,
-                    Duration = course.Duration
+                    Duration = course.Duration,
+                    Status = (AdminManageCourseViewModel.CourseStatus)course.Status
                 };
                 courseList.Add(courseViewModel);
             }
