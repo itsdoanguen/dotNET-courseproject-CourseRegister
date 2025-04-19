@@ -135,5 +135,54 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("ManageCourses", "Admin");
         }
+        // POST: Course/RestoreCourse
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> RestoreCourse(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var course = await _context.Courses.FindAsync(id);
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            course.Status = Course.CourseStatus.Active;
+
+            _context.Courses.Update(course);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("ManageCourses", "Admin");
+        }
+
+        // POST: Course/PerDeleteCourse
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> PerDeleteCourse(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var course = await _context.Courses.FindAsync(id);
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            _context.Courses.Remove(course);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("ManageCourses", "Admin");
+        }
     }
 }
