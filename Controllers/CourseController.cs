@@ -113,5 +113,27 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             
             return RedirectToAction("ManageCourses", "Admin");
         }
+        //POST: Course/DeleteCourse
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteCourse(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var course = await _context.Courses.FindAsync(id);
+            
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            course.Status = Course.CourseStatus.Inactive;
+
+            _context.Courses.Update(course);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("ManageCourses", "Admin");
+        }
     }
 }
