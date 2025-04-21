@@ -1,21 +1,32 @@
-﻿/* Navbar Custom */
+﻿/* Navbar */
 .navbar {
-    background-color: #004578;
+    background: linear-gradient(90deg, #003366 0%, #0055aa 100%);
+    color: #ffffff;
 }
 
 .navbar-brand {
     font-weight: bold;
     font-size: 1.5rem;
+    color: #ffffff;
 }
 
-.dropdown-toggle::after {
-    display: none; /* Ẩn mũi tên mặc định */
+    .navbar-brand:hover {
+        color: #aad4ff;
+    }
+
+.nav-link {
+    color: #ffffff;
+    font-weight: 500;
 }
 
-/* Avatar */
+    .nav-link:hover {
+        color: #aad4ff;
+    }
+
+/* Avatar in Navbar */
 .navbar .dropdown img {
     object-fit: cover;
-    border: 2px solid white;
+    border: 2px solid #ffffff;
     transition: transform 0.3s ease;
 }
 
@@ -25,10 +36,22 @@
 
 /* Dropdown Menu */
 .dropdown-menu {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
     animation: slideDown 0.3s ease forwards;
     transform-origin: top;
 }
 
+    .dropdown-menu a {
+        color: #000000;
+    }
+
+        .dropdown-menu a:hover {
+            background-color: #f8f9fa;
+            color: #0055aa;
+        }
+
+/* Animation for Dropdown */
 @keyframes slideDown {
     0% {
         opacity: 0;
@@ -43,10 +66,39 @@
 
 /* Footer */
 footer {
-    background-color: #212529;
-    color: #f8f9fa;
+    background: linear-gradient(90deg, #003366 0%, #0055aa 100%);
+    color: #ffffff;
 }
 
-    footer a:hover {
-        text-decoration: underline;
+    footer h5, footer h6 {
+        font-weight: bold;
+    }
+
+    footer a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+        footer a:hover {
+            color: #aad4ff;
+            text-decoration: underline;
+        }
+
+/* General Utilities */
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+main {
+    padding-top: 80px;
+}
+
+/* Button inside dropdown (logout) */
+.dropdown-item.text-danger {
+    color: #dc3545;
+}
+
+    .dropdown-item.text-danger:hover {
+        background-color: #f8d7da;
     }

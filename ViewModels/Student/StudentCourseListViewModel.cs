@@ -1,0 +1,20 @@
+﻿namespace dotNET_courseproject_CourseRegister.ViewModels.Student
+{
+    public class StudentCourseListViewModel
+    {
+        public int TotalCourses { get; set; } = 0;
+        public List<CourseList> CourseList { get; set; } = new List<CourseList>();
+    }
+    public class CourseList
+    {
+        public string CourseName { get; set; }
+        public string TeacherName { get; set; }
+        public string CourseDescription { get; set; }
+        public DateTime StartedTime { get; set; }
+        public int Cost { get; set; }
+        public int MaxStudents { get; set; }
+        public int CurrentStudents { get; set; }
+        public int Duration { get; set; }
+        public string CourseImage { get; set; } = "default.jpg";
+    }
+}

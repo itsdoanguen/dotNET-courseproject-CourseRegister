@@ -1,79 +1,88 @@
 ﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewData["Title"] - TechSkill Academy</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~/css/user.css" rel="stylesheet" />
-    @RenderSection("Styles", required: false)
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>@ViewData["Title"] - TechSkill Academy</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="~/css/user.css" rel="stylesheet" />
+	@RenderSection("Styles", required: false)
 </head>
 <body>
 
-    <!-- Navbar -->
-    <header class="navbar navbar-expand-lg navbar-dark fixed-top shadow" style="background-color: #004578;">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
+	<header class="navbar navbar-expand-lg fixed-top shadow" style="background-color: #ffffff;">
+		<div class="container-fluid">
+			<a class="navbar-brand fw-bold fs-4" asp-controller="Student" asp-action="Index">
+				TechSkill Academy
+			</a>
 
-            <a class="navbar-brand fw-bold fs-4" asp-controller="Student" asp-action="Index">
-                TechSkill Academy
-            </a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 
-            <!-- Avatar + Dropdown -->
-            <div class="dropdown">
-                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="~/images/default-avatar.png" alt="Avatar" width="40" height="40" class="rounded-circle me-2" />
-                    <strong>@User.Identity?.Name</strong>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" asp-controller="Student" asp-action="Profile">Hồ sơ cá nhân</a></li>
-                    <li><a class="dropdown-item" asp-controller="Student" asp-action="MyCourses">Khóa học của tôi</a></li>
-                    <li><a class="dropdown-item" asp-controller="Student" asp-action="Settings">Cài đặt</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li>
-                        <form asp-controller="Auth" asp-action="Logout" method="post" class="d-inline">
-                            <button type="submit" class="dropdown-item text-danger">Đăng xuất</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" asp-controller="Student" asp-action="Index">Trang chủ</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" asp-controller="Student" asp-action="CourseList">Khóa học</a>
+					</li>
+				</ul>
 
-        </div>
-    </header>
+				<div class="dropdown">
+					<a href="#" class="d-flex align-items-center text-decoration-none text-light dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+						<img src="~/images/default-avatar.png" alt="Avatar" width="40" height="40" class="rounded-circle me-2" />
+						<strong>@User.Identity?.Name</strong>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+						<li><a class="dropdown-item" asp-controller="Student" asp-action="Profile">Hồ sơ cá nhân</a></li>
+						<li><a class="dropdown-item" asp-controller="Student" asp-action="MyCourses">Khóa học của tôi</a></li>
+						<li><a class="dropdown-item" asp-controller="Student" asp-action="Settings">Cài đặt</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li>
+							<form asp-controller="Auth" asp-action="Logout" method="post" class="d-inline">
+								<button type="submit" class="dropdown-item text-danger">Đăng xuất</button>
+							</form>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
 
-    <!-- Dynamic Content -->
-    <main class="container pt-5 mt-5">
-        @RenderBody()
-    </main>
+	<main class="container pt-5 mt-5">
+		@RenderBody()
+	</main>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white pt-4 pb-3 mt-5">
-        <div class="container text-center text-md-start">
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <h5>TechSkill Academy</h5>
-                    <p>Nâng cao kỹ năng IT, chạm tới sự nghiệp mơ ước.</p>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <h6>Liên kết nhanh</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white text-decoration-none">Về chúng tôi</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Khóa học</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Hỗ trợ</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <h6>Kết nối với chúng tôi</h6>
-                    <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i> Facebook</a><br />
-                    <a href="#" class="text-white"><i class="bi bi-envelope"></i> Email: support@techskill.vn</a>
-                </div>
-            </div>
-            <div class="text-center pt-3 border-top border-secondary mt-3">
-                &copy; 2025 TechSkill Academy. All rights reserved.
-            </div>
-        </div>
-    </footer>
+	<footer class="bg-light pt-4 pb-3 mt-5">
+		<div class="container text-center text-md-start">
+			<div class="row">
+				<div class="col-md-4 mb-3">
+					<h5 class="">TechSkill Academy</h5>
+					<p class="">Nâng cao kỹ năng IT, chạm tới sự nghiệp mơ ước.</p>
+				</div>
+				<div class="col-md-4 mb-3">
+					<h6 class="">Liên kết nhanh</h6>
+					<ul class="list-unstyled">
+						<li><a href="#" class="text-decoration-none">Về chúng tôi</a></li>
+						<li><a href="#" class="text-decoration-none">Khóa học</a></li>
+						<li><a href="#" class="text-decoration-none">Hỗ trợ</a></li>
+					</ul>
+				</div>
+				<div class="col-md-4 mb-3">
+					<h6 class="">Kết nối với chúng tôi</h6>
+					<a href="#" class=" me-2"><i class="bi bi-facebook"></i> Facebook</a><br />
+					<a href="#" class=""><i class="bi bi-envelope"></i> Email: support@techskill.vn</a>
+				</div>
+			</div>
+			<div class="text-center pt-3 border-top border-secondary mt-3">
+				&copy; 2025 TechSkill Academy. All rights reserved.
+			</div>
+		</div>
+	</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    @RenderSection("Scripts", required: false)
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	@RenderSection("Scripts", required: false)
 </body>
 </html>
