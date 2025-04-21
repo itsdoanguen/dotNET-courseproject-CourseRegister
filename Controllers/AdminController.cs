@@ -18,7 +18,6 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             return View();
         }
 
-        //GET: Admin/ManageUsers
         //GET: Admin/Dashboard
         //GET: Admin/Reports
 
@@ -53,6 +52,37 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             }
 
             return courseList;
+        }
+
+
+        //GET: Admin/ManageUsers
+        [HttpGet]
+        public IActionResult ManageUsers()
+        {
+            var usersList = GetUserList();
+            return View(usersList);
+        }
+
+        private List<AdminManageUserViewModel> GetUserList()
+        {
+            var users = _context.Users.ToList();
+            var userList = new List<AdminManageUserViewModel>();
+            foreach (var user in users)
+            {
+                var userViewModel = new AdminManageUserViewModel
+                {
+                    UserId = user.UserId,
+                    UserName = user.UserName,
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    DOB = user.DOB,
+                    CreatedTime = user.CreatedTime,
+                    TotalCourses = _context.UserCourses.Count(uc => uc.UserId == user.UserId)
+                };
+                userList.Add(userViewModel);
+            }
+            return userList;
         }
     }
 }

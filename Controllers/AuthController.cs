@@ -76,6 +76,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 ModelState.AddModelError("Email", "Email này đã được sử dụng");
                 return View(model);
             }
+
             var usedUsername = _context.Users.FirstOrDefault(s => s.UserName == model.UserName);
             if (usedUsername != null)
             {
@@ -88,14 +89,20 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 UserName = model.UserName,
                 Password = BCrypt.Net.BCrypt.HashPassword(model.Password),
                 Email = model.Email,
-                Role = Models.User.UserRole.Student
+                FullName = model.FullName,
+                PhoneNumber = model.PhoneNumber,
+                DOB = model.DOB,
+                Role = Models.User.UserRole.Student,
+                CreatedTime = DateTime.Now
             };
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
             await SignIn(user);
             return RedirectToAction("Index", "Student");
         }
+
         //GET: Auth/Login
         public IActionResult Login()
         {

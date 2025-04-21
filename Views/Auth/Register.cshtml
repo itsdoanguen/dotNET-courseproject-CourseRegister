@@ -15,7 +15,6 @@
                     
                     <form asp-action="Register" method="post" novalidate>
                         @Html.AntiForgeryToken()
-
                         <!-- Email -->
                         <div class="mb-3">
                             <label asp-for="Email" class="form-label"></label>
@@ -28,6 +27,27 @@
                             <label asp-for="UserName" class="form-label"></label>
                             <input asp-for="UserName" class="form-control" />
                             <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+
+                        <!-- Họ và tên -->
+                        <div class="mb-3">
+                            <label asp-for="FullName" class="form-label"></label>
+                            <input asp-for="FullName" class="form-control" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+
+                        <!-- Số điện thoại -->
+                        <div class="mb-3">
+                            <label asp-for="PhoneNumber" class="form-label"></label>
+                            <input asp-for="PhoneNumber" class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <!-- Ngày sinh -->
+                        <div class="mb-3">
+                            <label asp-for="DOB" class="form-label"></label>
+                            <input asp-for="DOB" class="form-control" type="date" />
+                            <span asp-validation-for="DOB" class="text-danger"></span>
                         </div>
 
                         <!-- Mật khẩu -->
