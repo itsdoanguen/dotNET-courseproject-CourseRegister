@@ -14,7 +14,8 @@ namespace dotNET_courseproject_CourseRegister.Models
         public string TeacherName { get; set; }
         [Required]
         public string CourseDescription { get; set; }
-
+        [Required]
+        public string CourseImage { get; set; } = "default.jpg";
         [Required]
         public DateTime StartedTime { get; set; }
 

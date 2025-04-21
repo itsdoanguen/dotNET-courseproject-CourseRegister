@@ -13,6 +13,8 @@ namespace dotNET_courseproject_CourseRegister.Models
 
         [Required]
         public int CourseId { get; set; }
+        [Required]
+        public DateTime RegistedTime { get; set; } = DateTime.Now;
 
         [ForeignKey("UserId")]
         public User User { get; set; }

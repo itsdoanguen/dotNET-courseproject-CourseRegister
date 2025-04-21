@@ -1,0 +1,82 @@
+﻿@model dotNET_courseproject_CourseRegister.ViewModels.Course.CourseDetailsViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Chi tiết khóa học";
+}
+
+<div class="container py-4" style="color: black; background-color: white;">
+    <h2 class="mb-4 border-bottom pb-2">Thông tin khóa học</h2>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <img src="@Model.CourseImage" alt="Ảnh khóa học" class="img-fluid rounded" style="border: 1px solid #000;" />
+        </div>
+        <div class="col-md-8">
+            <dl class="row">
+                <dt class="col-sm-4">Tên khóa học:</dt>
+                <dd class="col-sm-8">@Model.CourseName</dd>
+
+                <dt class="col-sm-4">Giáo viên:</dt>
+                <dd class="col-sm-8">@Model.TeacherName</dd>
+
+                <dt class="col-sm-4">Mô tả:</dt>
+                <dd class="col-sm-8">@Model.CourseDescription</dd>
+
+                <dt class="col-sm-4">Thời gian bắt đầu:</dt>
+                <dd class="col-sm-8">@Model.StartedTime.ToString("dd/MM/yyyy")</dd>
+
+                <dt class="col-sm-4">Học phí:</dt>
+                <dd class="col-sm-8">@Model.Cost.ToString("N0") VNĐ</dd>
+
+                <dt class="col-sm-4">Số lượng tối đa:</dt>
+                <dd class="col-sm-8">@Model.MaxStudents</dd>
+
+                <dt class="col-sm-4">Hiện tại:</dt>
+                <dd class="col-sm-8">@Model.CurrentStudents học viên</dd>
+
+                <dt class="col-sm-4">Thời lượng:</dt>
+                <dd class="col-sm-8">@Model.Duration buổi</dd>
+            </dl>
+        </div>
+    </div>
+
+    <h3 class="mb-3 border-bottom pb-2">Danh sách học viên đăng ký</h3>
+
+    @if (Model.EnrolledUsers != null && Model.EnrolledUsers.Count > 0)
+    {
+        <table class="table table-bordered table-striped" style="background-color: white; color: black;">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Tên học viên</th>
+                    <th>Email</th>
+                    <th>Ngày đăng ký</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.EnrolledUsers.Count; i++)
+                {
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@Model.EnrolledUsers[i].UserName</td>
+                        <td>@Model.EnrolledUsers[i].Email</td>
+                        <td>@Model.EnrolledUsers[i].EnrolledDate.ToString("dd/MM/yyyy")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-secondary text-center" role="alert">
+            Chưa có học sinh nào đăng ký khóa học này.
+        </div>
+    }
+
+    <div class="mt-4">
+        <a asp-controller="Admin" asp-action="ManageCourses" class="btn btn-dark rounded-pill px-4">
+            ← Quay lại danh sách khóa học
+        </a>
+    </div>
+</div>

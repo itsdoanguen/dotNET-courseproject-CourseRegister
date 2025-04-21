@@ -29,5 +29,7 @@ namespace dotNET_courseproject_CourseRegister.ViewModels.Course
         [Required]
         [Display(Name = "Thời lượng khóa học (Buổi)")]
         public int Duration { get; set; }
+        public IFormFile? CourseImage { get; set; }
+
     }
 }

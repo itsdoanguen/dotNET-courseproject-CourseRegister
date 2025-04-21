@@ -1,12 +1,13 @@
-﻿using dotNET_courseproject_CourseRegister.Data;
+﻿using System.Threading.Tasks;
+using dotNET_courseproject_CourseRegister.Data;
 using dotNET_courseproject_CourseRegister.Models;
 using dotNET_courseproject_CourseRegister.ViewModels.Course;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace dotNET_courseproject_CourseRegister.Controllers
 {
-    [Authorize]
     public class CourseController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -14,9 +15,39 @@ namespace dotNET_courseproject_CourseRegister.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        //GET: Course/Details
+        [HttpGet]
+        public async Task<IActionResult> CourseDetails(int id)
         {
-            return View();
+            var course = await _context.Courses
+                .FirstOrDefaultAsync(c => c.CourseId == id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            var enrroledUser = await _context.UserCourses.Where(c => c.CourseId == id).Include(uc => uc.User).Select(uc => new EnrolledUserViewModel
+            {
+                UserId = uc.UserId,
+                UserName = uc.User.UserName,
+                Email = uc.User.Email,
+                EnrolledDate = uc.RegistedTime
+            }).ToListAsync();
+
+            var courseViewModel = new CourseDetailsViewModel
+            {
+                CourseName = course.CourseName,
+                TeacherName = course.TeacherName,
+                CourseDescription = course.CourseDescription,
+                StartedTime = course.StartedTime,
+                Cost = course.Cost,
+                MaxStudents = course.MaxStudents,
+                CurrentStudents = course.CurrentStudents,
+                Duration = course.Duration,
+                CourseImage = course.CourseImage,
+                EnrolledUsers = enrroledUser
+            };
+            return View(courseViewModel);
         }
         //GET: Course/Create
         [HttpGet]
@@ -44,6 +75,27 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 return View(course);
             }
 
+            string? imagePath = null;
+            if (course.CourseImage != null && course.CourseImage.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(course.CourseImage.FileName);
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await course.CourseImage.CopyToAsync(stream);
+                }
+
+                imagePath = "/images/" + uniqueFileName;
+            }
+
             var newCourse = new Course
             {
                 CourseName = course.CourseName,
@@ -53,7 +105,8 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 MaxStudents = course.MaxStudents,
                 Duration = course.Duration,
                 CourseDescription = course.CourseDescription,
-                Status = Course.CourseStatus.Active
+                Status = Course.CourseStatus.Active,
+                CourseImage = imagePath ?? "/images/default.jpg"
             };
 
             await _context.Courses.AddAsync(newCourse);
@@ -100,6 +153,26 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 return NotFound();
             }
 
+            if (course.CourseImage != null && course.CourseImage.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(course.CourseImage.FileName);
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await course.CourseImage.CopyToAsync(stream);
+                }
+
+                existingCourse.CourseImage = "/images/" + uniqueFileName;
+            }
+
             existingCourse.CourseName = course.CourseName;
             existingCourse.TeacherName = course.TeacherName;
             existingCourse.StartedTime = course.StartedTime;
@@ -110,12 +183,13 @@ namespace dotNET_courseproject_CourseRegister.Controllers
 
             _context.Courses.Update(existingCourse);
             await _context.SaveChangesAsync();
-            
+
             return RedirectToAction("ManageCourses", "Admin");
         }
         //POST: Course/DeleteCourse
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCourse(int? id)
         {
             if (id == null)
@@ -123,7 +197,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 return NotFound();
             }
             var course = await _context.Courses.FindAsync(id);
-            
+
             if (course == null)
             {
                 return NotFound();
@@ -160,8 +234,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
 
             return RedirectToAction("ManageCourses", "Admin");
         }
-
-        // POST: Course/PerDeleteCourse
+        //POST: Course/PerDeleteCourse
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
@@ -172,17 +245,27 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Courses.FindAsync(id);
+            var course = await _context.Courses
+                .Include(c => c.EnrolledUsers)
+                .FirstOrDefaultAsync(c => c.CourseId == id);
 
             if (course == null)
             {
                 return NotFound();
             }
 
+            if (course.EnrolledUsers != null && course.EnrolledUsers.Count > 0)
+            {
+                TempData["ErrorMessage"] = "Không thể xóa khóa học này vì có học viên đã đăng ký.";
+                return RedirectToAction("ManageCourses", "Admin");
+            }
+
             _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
 
+            TempData["SuccessMessage"] = "Xóa khóa học thành công.";
             return RedirectToAction("ManageCourses", "Admin");
         }
+
     }
 }
