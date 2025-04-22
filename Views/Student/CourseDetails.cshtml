@@ -4,6 +4,23 @@
     Layout = "~/Views/Shared/_LayoutStudent.cshtml";
     ViewData["Title"] = "Chi tiết khóa học";
 }
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
 <section class="py-5">
     <div class="container">
         <div class="row gy-5 align-items-center">
@@ -50,15 +67,15 @@
                     <!-- Button đăng ký hoặc hủy -->
                     @if (Model.IsEnrolled)
                     {
-                        <form asp-action="Cancel" method="post">
+                        <form asp-action="Cancel" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn HỦY đăng ký khóa học này không?');">
                             <input type="hidden" name="courseId" value="@Model.CourseLists.CourseId" />
-                            <button type="submit" class="btn btn-primary rounded-pill alert-danger px-4">Hủy đăng ký</button>
+                            <button type="submit" class="btn btn-danger rounded-pill px-4">Hủy đăng ký</button>
                         </form>
                     }
                     else
                     {
-                        <form asp-action="Enroll" method="post">
-                            <input type="hidden" name="courseId" value="@Model.CourseLists.CourseId" />
+                        <form asp-action="CourseRegister" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn ĐĂNG KÝ khóa học này không?');">
+                            <input type="hidden" name="id" value="@Model.CourseLists.CourseId" />
                             <button type="submit" class="btn btn-primary rounded-pill px-4">Đăng ký ngay</button>
                         </form>
                     }

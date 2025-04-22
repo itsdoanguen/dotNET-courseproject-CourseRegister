@@ -13,6 +13,7 @@
 </section>
 
 <!-- Khoá học của bạn -->
+<!-- Khoá học của bạn -->
 <section class="py-5">
     <div class="container">
         <h2 class="mb-4">Khoá học của bạn</h2>
@@ -22,14 +23,16 @@
                 @foreach (var course in Model.StudentCourse)
                 {
                     <div class="col-md-4 mb-4">
-                        <div class="card h-100 shadow-sm">
-                            <img src="@course.CourseImage" class="card-img-top" alt="@course.CourseName">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">@course.CourseName</h5>
-                                <p class="card-text">@course.CourseDescription</p>
-                                <p class="mt-auto text-muted">Giảng viên: @course.TeacherName</p>
+                        <a href="@Url.Action("CourseDetails", "Student", new { id = course.CourseId })" class="text-decoration-none text-dark">
+                            <div class="card h-100 shadow-sm">
+                                <img src="@course.CourseImage" class="card-img-top" alt="@course.CourseName">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">@course.CourseName</h5>
+                                    <p class="card-text">@course.CourseDescription</p>
+                                    <p class="mt-auto text-muted">Giảng viên: @course.TeacherName</p>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 }
             </div>

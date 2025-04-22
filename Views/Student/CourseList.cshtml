@@ -6,34 +6,49 @@
 }
 
 <section class="py-5 bg-light min-vh-100">
-	<div class="container">
-		<h2 class="text-center mb-5 fw-bold">Danh sách khóa học</h2>
-		<div class="mt-5 text-center">
-			<span class="text-muted">Tổng số khóa học: @Model.TotalCourses</span>
-		</div>
-		<br />
-		<div class="row g-4">
-			@foreach (var course in Model.CourseList)
-			{
-				<div class="col-12 col-sm-6 col-md-4 col-lg-3">
-					<div class="card h-100 shadow-sm rounded-4">
-						<a asp-controller="Student" asp-action="CourseDetails" asp-route-id="@course.CourseId" class="text-decoration-none text-dark">
-							<img src="@course.CourseImage" class="card-img-top rounded-top-4" alt="Ảnh khóa học" style="height: 180px; object-fit: cover;" />
-							<div class="card-body">
-								<h5 class="card-title fw-bold">@course.CourseName</h5>
-								<p class="card-text text-muted small">@course.TeacherName</p>
-								<p class="card-text small">
-									@(course.CourseDescription?.Length > 80 ? course.CourseDescription.Substring(0, 77) + "..." : course.CourseDescription)
-								</p>
-							</div>
-							<div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
-								<span class="fw-bold text-primary">@string.Format("{0:N0} VNĐ", course.Cost)</span>
-								<small class="text-muted">@course.Duration tuần</small>
-							</div>
-						</a>
-					</div>
-				</div>
-			}
-		</div>
-	</div>
+    <div class="container">
+        <h2 class="text-center mb-5 fw-bold">Danh sách khóa học</h2>
+        <div class="mt-5 text-center">
+            <span class="text-muted">Tổng số khóa học: @Model.TotalCourses</span>
+        </div>
+
+        <br />
+
+        @* Khóa học sắp full *@
+        @if (Model.NearlyFullCourses.Any())
+        {
+            <h4 class="text-danger fw-bold my-4">⚡ Khóa học sắp hết nhận đăng ký!</h4>
+            <div class="row g-4">
+                @foreach (var course in Model.NearlyFullCourses)
+                {
+                    @Html.Partial("_CourseCardPartial", course)
+                }
+            </div>
+        }
+
+        @* Khóa học còn chỗ bình thường *@
+        @if (Model.NormalCourses.Any())
+        {
+            <h4 class="text-primary fw-bold my-4">Các khóa học còn nhận đăng ký</h4>
+            <div class="row g-4">
+                @foreach (var course in Model.NormalCourses)
+                {
+                    @Html.Partial("_CourseCardPartial", course)
+                }
+            </div>
+        }
+
+        @* Khóa học đã đầy / hết hạn *@
+        @if (Model.FullOrClosedCourses.Any())
+        {
+            <h4 class="text-muted fw-bold my-4">Khóa học đã kết thúc đăng ký</h4>
+            <div class="row g-4">
+                @foreach (var course in Model.FullOrClosedCourses)
+                {
+                    @Html.Partial("_CourseCardPartial", course)
+                }
+            </div>
+        }
+    </div>
 </section>
+

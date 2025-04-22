@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using dotNET_courseproject_CourseRegister.Data;
+using dotNET_courseproject_CourseRegister.Models;
 using dotNET_courseproject_CourseRegister.ViewModels.Student;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +15,11 @@ namespace dotNET_courseproject_CourseRegister.Controllers
         {
             _context = context;
         }
+
         //GET: Student/Index
         public IActionResult Index()
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var course = _context.Courses.ToList();
             var courseList = new StudentIndexViewModel
             {
                 CourseList = GetCourseList(),
@@ -30,12 +31,36 @@ namespace dotNET_courseproject_CourseRegister.Controllers
         [HttpGet]
         public IActionResult CourseList()
         {
-            var courseList = _context.Courses.ToList();
+            var courseList = GetCourseList();
+            
+            var normalCourseList = new List<CourseList>();
+            var nearlyFullCourseList = new List<CourseList>();
+            var fullOrClosedCourseList = new List<CourseList>();
+
+            foreach (var course in courseList)
+            {
+                if (course.CurrentStudents >= course.MaxStudents || course.StartedTime < DateTime.Now)
+                {
+                    fullOrClosedCourseList.Add(course);
+                }
+                else if (course.CurrentStudents >= course.MaxStudents * 0.8 || (course.StartedTime - DateTime.Now).TotalDays <= 7)
+                {
+                    nearlyFullCourseList.Add(course);
+                }
+                else
+                {
+                    normalCourseList.Add(course);
+                }
+            }
+
             var courseListViewModel = new StudentCourseListViewModel
             {
                 TotalCourses = courseList.Count,
-                CourseList = GetCourseList()
+                NormalCourses = normalCourseList,
+                NearlyFullCourses = nearlyFullCourseList,
+                FullOrClosedCourses = fullOrClosedCourseList
             };
+
             return View(courseListViewModel);
         }
         //GET: Student/CourseDetails
@@ -55,9 +80,55 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             };
             return View(courseViewModel);
         }
+
+        //POST: Student/CourseRegister
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CourseRegister(int id)
+        {
+            var course = _context.Courses.FirstOrDefault(c => c.CourseId == id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+            if (course.Status != Course.CourseStatus.Active)
+            {
+                TempData["ErrorMessage"] = "Khóa học không còn hoạt động. Bạn không thể đăng ký!";
+                return RedirectToAction("CourseDetails", new { id });
+            }
+            if (course.CurrentStudents >= course.MaxStudents)
+            {
+                TempData["ErrorMessage"] = "Khóa học đã đạt số lượng học viên tối đa. Xin vui lòng chọn khóa học khác!";
+                return RedirectToAction("CourseDetails", new { id });
+            }
+            if (course.StartedTime < DateTime.Now)
+            {
+                TempData["ErrorMessage"] = "Khóa học đã bắt đầu. Bạn không thể đăng ký!";
+                return RedirectToAction("CourseDetails", new { id });
+            }
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userCourse = new User_Course
+            {
+                CourseId = id,
+                UserId = userId,
+                RegistedTime = DateTime.Now
+            };
+            await _context.UserCourses.AddAsync(userCourse);
+
+            course.CurrentStudents++;
+            _context.Courses.Update(course);
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Đăng ký khóa học thành công!";
+            return RedirectToAction("CourseDetails", new { id });
+        }
+
+
+
+        //Methods
         private List<CourseList> GetCourseList()
         {
-            var courses = _context.Courses.ToList();
+            var courses = _context.Courses.Where(c => c.Status == Course.CourseStatus.Active).ToList();
             var courseList = new List<CourseList>();
             foreach (var course in courses)
             {
@@ -85,7 +156,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             foreach (var course in coursesID)
             {
                 var courseContext = _context.Courses.FirstOrDefault(c => c.CourseId == course.CourseId);
-                if (courseContext != null)
+                if (courseContext != null && courseContext.Status == Course.CourseStatus.Active)
                 {
                     var courseViewModel = GetCourseList().FirstOrDefault(c => c.CourseId == courseContext.CourseId);
                     courseList.Add(courseViewModel);

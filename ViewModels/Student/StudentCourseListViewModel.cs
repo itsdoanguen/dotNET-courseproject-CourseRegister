@@ -3,8 +3,12 @@
     public class StudentCourseListViewModel
     {
         public int TotalCourses { get; set; } = 0;
-        public List<CourseList> CourseList { get; set; } = new List<CourseList>();
+
+        public List<CourseList> NormalCourses { get; set; } = new List<CourseList>();
+        public List<CourseList> NearlyFullCourses { get; set; } = new List<CourseList>();
+        public List<CourseList> FullOrClosedCourses { get; set; } = new List<CourseList>();
     }
+
     public class CourseList
     {
         public int CourseId { get; set; }
