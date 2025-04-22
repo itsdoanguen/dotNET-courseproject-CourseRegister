@@ -5,78 +5,78 @@
     ViewData["Title"] = "Chi tiết khóa học";
 }
 
+<!-- Hiển thị Alert -->
 @if (TempData["ErrorMessage"] != null)
 {
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
         @TempData["ErrorMessage"]
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
 @if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
         @TempData["SuccessMessage"]
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
 
-
 <section class="py-5">
     <div class="container">
-        <div class="row gy-5 align-items-center">
-            <!-- Ảnh khóa học -->
+        <div class="row g-5 align-items-center">
+            <!-- Hình ảnh khóa học -->
             <div class="col-lg-6">
-                <img src="@Model.CourseLists.CourseImage" alt="@Model.CourseLists.CourseName" class="img-fluid rounded-4 shadow" style="object-fit: cover; width: 100%; height: 500px;">
+                <div class="overflow-hidden rounded-4 shadow">
+                    <img src="@Model.CourseLists.CourseImage" alt="@Model.CourseLists.CourseName" class="img-fluid w-100" style="height: 500px; object-fit: cover;">
+                </div>
             </div>
 
-            <!-- Thông tin khóa học -->
+            <!-- Thông tin chi tiết -->
             <div class="col-lg-6">
-                <div class="d-flex flex-column gap-4">
-                    <div>
-                        <h1 class="fw-bold">@Model.CourseLists.CourseName</h1>
-                        <p class="text-muted mt-2">Giảng viên: <span class="fw-semibold">@Model.CourseLists.TeacherName</span></p>
-                    </div>
+                <h1 class="fw-bold mb-3">@Model.CourseLists.CourseName</h1>
+                <p class="text-muted mb-4">Giảng viên: <span class="fw-semibold">@Model.CourseLists.TeacherName</span></p>
 
-                    <div>
-                        <h5 class="fw-bold mb-2">Mô tả khóa học</h5>
-                        <p class="text-justify">@Model.CourseLists.CourseDescription</p>
-                    </div>
+                <div class="mb-4">
+                    <h5 class="fw-bold">Mô tả khoá học</h5>
+                    <p class="text-justify">@Model.CourseLists.CourseDescription</p>
+                </div>
 
-                    <div>
-                        <h5 class="fw-bold mb-2">Thông tin chi tiết</h5>
-                        <div class="row">
-                            <div class="col-6 mb-2">
-                                <strong>Ngày bắt đầu:</strong> <br />@Model.CourseLists.StartedTime.ToString("dd/MM/yyyy")
-                            </div>
-                            <div class="col-6 mb-2">
-                                <strong>Thời lượng:</strong> <br />@Model.CourseLists.Duration giờ
-                            </div>
-                            <div class="col-6 mb-2">
-                                <strong>Học phí:</strong> <br /><span class="text-primary fw-bold">@Model.CourseLists.Cost.ToString("N0") đ</span>
-                            </div>
-                            <div class="col-6 mb-2">
-                                <strong>Tối đa học viên:</strong> <br />@Model.CourseLists.MaxStudents
-                            </div>
-                            <div class="col-6 mb-2">
-                                <strong>Hiện tại:</strong> <br />@Model.CourseLists.CurrentStudents
-                            </div>
+                <div class="mb-4">
+                    <h5 class="fw-bold">Thông tin khoá học</h5>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <small class="text-muted">Ngày bắt đầu</small>
+                            <div class="fw-semibold">@Model.CourseLists.StartedTime.ToString("dd/MM/yyyy")</div>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">Thời lượng</small>
+                            <div class="fw-semibold">@Model.CourseLists.Duration buổi</div>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">Học phí</small>
+                            <div class="fw-bold text-primary">@Model.CourseLists.Cost.ToString("N0") đ</div>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">Số lượng học viên</small>
+                            <div class="fw-semibold">@Model.CourseLists.CurrentStudents / @Model.CourseLists.MaxStudents</div>
                         </div>
                     </div>
+                </div>
 
-
-                    <!-- Button đăng ký hoặc hủy -->
+                <!-- Nút đăng ký / hủy đăng ký -->
+                <div>
                     @if (Model.IsEnrolled)
                     {
-                        <form asp-action="Cancel" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn HỦY đăng ký khóa học này không?');">
-                            <input type="hidden" name="courseId" value="@Model.CourseLists.CourseId" />
-                            <button type="submit" class="btn btn-danger rounded-pill px-4">Hủy đăng ký</button>
+                        <form asp-action="CourseCancel" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn HỦY đăng ký khóa học này không?');">
+                            <input type="hidden" name="id" value="@Model.CourseLists.CourseId" />
+                            <button type="submit" class="btn btn-outline-danger rounded-pill px-5 py-2">Hủy đăng ký</button>
                         </form>
                     }
                     else
                     {
                         <form asp-action="CourseRegister" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn ĐĂNG KÝ khóa học này không?');">
                             <input type="hidden" name="id" value="@Model.CourseLists.CourseId" />
-                            <button type="submit" class="btn btn-primary rounded-pill px-4">Đăng ký ngay</button>
+                            <button type="submit" class="btn btn-primary rounded-pill px-5 py-2">Đăng ký ngay</button>
                         </form>
                     }
                 </div>
@@ -85,4 +85,4 @@
     </div>
 </section>
 
-<div style="height: 100px;"></div>
+<div style="height: 80px;"></div>

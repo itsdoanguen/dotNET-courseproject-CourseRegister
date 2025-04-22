@@ -13,7 +13,6 @@
 </section>
 
 <!-- Khoá học của bạn -->
-<!-- Khoá học của bạn -->
 <section class="py-5">
     <div class="container">
         <h2 class="mb-4">Khoá học của bạn</h2>
@@ -24,12 +23,14 @@
                 {
                     <div class="col-md-4 mb-4">
                         <a href="@Url.Action("CourseDetails", "Student", new { id = course.CourseId })" class="text-decoration-none text-dark">
-                            <div class="card h-100 shadow-sm">
-                                <img src="@course.CourseImage" class="card-img-top" alt="@course.CourseName">
+                            <div class="card h-100 shadow-sm d-flex flex-column">
+                                <div style="height: 200px; overflow: hidden;">
+                                    <img src="@course.CourseImage" class="card-img-top" alt="@course.CourseName" style="height: 100%; width: 100%; object-fit: cover;">
+                                </div>
                                 <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title">@course.CourseName</h5>
-                                    <p class="card-text">@course.CourseDescription</p>
-                                    <p class="mt-auto text-muted">Giảng viên: @course.TeacherName</p>
+                                    <h5 class="card-title text-truncate">@course.CourseName</h5>
+                                    <p class="card-text flex-grow-1">@(course.CourseDescription?.Length > 60 ? course.CourseDescription.Substring(0, 57) + "..." : course.CourseDescription)</p>
+                                    <p class="mt-2 text-muted">Giảng viên: <strong>@course.TeacherName</strong></p>
                                 </div>
                             </div>
                         </a>
@@ -46,7 +47,6 @@
     </div>
 </section>
 
-<!-- Tiêu đề phía trên -->
 <div class="py-5 text-center">
     <h2 class="fw-bold">Khoá học nổi bật</h2>
 </div>
@@ -81,7 +81,6 @@
                 }
             </div>
 
-            <!-- Nút chuyển trái/phải -->
             <button class="carousel-control-prev" type="button" data-bs-target="#featuredCoursesCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Trước</span>

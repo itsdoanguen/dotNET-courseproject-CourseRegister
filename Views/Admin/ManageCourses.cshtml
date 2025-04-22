@@ -45,25 +45,34 @@
                                 <td>@course.Duration</td>
                                 <td>@(course.Status == dotNET_courseproject_CourseRegister.ViewModels.Admin.AdminManageCourseViewModel.CourseStatus.Active ? "Hoạt động" : "Tạm dừng")</td>
                                 <td>
-                                    <div class="d-flex gap-2">
+                                    <div class="btn-group" role="group">
                                         @if (course.Status == dotNET_courseproject_CourseRegister.ViewModels.Admin.AdminManageCourseViewModel.CourseStatus.Active)
                                         {
-                                            <a asp-controller="Course" asp-action="EditCourse" asp-route-id="@course.CourseId" class="btn btn-sm btn-outline-primary rounded-pill px-3">Sửa</a>
                                             <form asp-controller="Course" asp-action="DeleteCourse" asp-route-id="@course.CourseId" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn tạm dừng khóa học này?');">
-                                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">Tạm dừng</button>
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                    <i class="bi bi-pause-circle"></i> Tạm dừng
+                                                </button>
                                             </form>
                                         }
                                         else
                                         {
+                                            <a asp-controller="Course" asp-action="EditCourse" asp-route-id="@course.CourseId" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-pencil-square"></i> Sửa
+                                            </a>
                                             <form asp-controller="Course" asp-action="RestoreCourse" asp-route-id="@course.CourseId" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn khôi phục khóa học này?');">
-                                                <button type="submit" class="btn btn-sm btn-outline-success rounded-pill px-3">Khôi phục</button>
+                                                <button type="submit" class="btn btn-sm btn-outline-success">
+                                                    <i class="bi bi-arrow-clockwise"></i> Khôi phục
+                                                </button>
                                             </form>
                                             <form asp-controller="Course" asp-action="PerDeleteCourse" asp-route-id="@course.CourseId" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa VĨNH VIỄN khóa học này?');">
-                                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">Xóa vĩnh viễn</button>
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                    <i class="bi bi-trash3"></i> Xóa
+                                                </button>
                                             </form>
                                         }
                                     </div>
                                 </td>
+
                             </tr>
                             index++;
                         }

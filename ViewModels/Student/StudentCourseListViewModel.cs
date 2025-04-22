@@ -21,5 +21,6 @@
         public int CurrentStudents { get; set; }
         public int Duration { get; set; }
         public string CourseImage { get; set; } = "default.jpg";
+        public string Status { get; set; }
     }
 }

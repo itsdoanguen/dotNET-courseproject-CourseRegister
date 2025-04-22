@@ -63,6 +63,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
 
             return View(courseListViewModel);
         }
+
         //GET: Student/CourseDetails
         [HttpGet]
         public IActionResult CourseDetails(int id)
@@ -122,7 +123,39 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             TempData["SuccessMessage"] = "Đăng ký khóa học thành công!";
             return RedirectToAction("CourseDetails", new { id });
         }
+        //POST: Student/CourseCancel
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CourseCancel(int id)
+        {
+            var course = _context.Courses.FirstOrDefault(c => c.CourseId == id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userCourse = _context.UserCourses.FirstOrDefault(c => c.CourseId == id && c.UserId == userId);
+            if (userCourse == null)
+            {
+                TempData["ErrorMessage"] = "Bạn chưa đăng ký khóa học này!";
+                return RedirectToAction("CourseDetails", new { id });
+            }
 
+            if (course.StartedTime < DateTime.Now)
+            {
+                TempData["ErrorMessage"] = "Khóa học đã bắt đầu. Bạn không thể hủy đăng ký!";
+                return RedirectToAction("CourseDetails", new { id });
+            }
+
+
+            _context.UserCourses.Remove(userCourse);
+            course.CurrentStudents--;
+            _context.Courses.Update(course);
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Hủy đăng ký khóa học thành công!";
+            return RedirectToAction("CourseDetails", new { id });
+        }
 
 
         //Methods
