@@ -17,7 +17,7 @@
 			{
 				<div class="col-12 col-sm-6 col-md-4 col-lg-3">
 					<div class="card h-100 shadow-sm rounded-4">
-						<a asp-controller="Student" asp-action="ViewCourse" asp-route-courseName="@course.CourseName" class="text-decoration-none text-dark">
+						<a asp-controller="Student" asp-action="CourseDetails" asp-route-id="@course.CourseId" class="text-decoration-none text-dark">
 							<img src="@course.CourseImage" class="card-img-top rounded-top-4" alt="Ảnh khóa học" style="height: 180px; object-fit: cover;" />
 							<div class="card-body">
 								<h5 class="card-title fw-bold">@course.CourseName</h5>

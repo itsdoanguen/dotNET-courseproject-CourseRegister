@@ -1,0 +1,71 @@
+﻿@model dotNET_courseproject_CourseRegister.ViewModels.Student.StudentCourseDetailViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    ViewData["Title"] = "Chi tiết khóa học";
+}
+<section class="py-5">
+    <div class="container">
+        <div class="row gy-5 align-items-center">
+            <!-- Ảnh khóa học -->
+            <div class="col-lg-6">
+                <img src="@Model.CourseLists.CourseImage" alt="@Model.CourseLists.CourseName" class="img-fluid rounded-4 shadow" style="object-fit: cover; width: 100%; height: 500px;">
+            </div>
+
+            <!-- Thông tin khóa học -->
+            <div class="col-lg-6">
+                <div class="d-flex flex-column gap-4">
+                    <div>
+                        <h1 class="fw-bold">@Model.CourseLists.CourseName</h1>
+                        <p class="text-muted mt-2">Giảng viên: <span class="fw-semibold">@Model.CourseLists.TeacherName</span></p>
+                    </div>
+
+                    <div>
+                        <h5 class="fw-bold mb-2">Mô tả khóa học</h5>
+                        <p class="text-justify">@Model.CourseLists.CourseDescription</p>
+                    </div>
+
+                    <div>
+                        <h5 class="fw-bold mb-2">Thông tin chi tiết</h5>
+                        <div class="row">
+                            <div class="col-6 mb-2">
+                                <strong>Ngày bắt đầu:</strong> <br />@Model.CourseLists.StartedTime.ToString("dd/MM/yyyy")
+                            </div>
+                            <div class="col-6 mb-2">
+                                <strong>Thời lượng:</strong> <br />@Model.CourseLists.Duration giờ
+                            </div>
+                            <div class="col-6 mb-2">
+                                <strong>Học phí:</strong> <br /><span class="text-primary fw-bold">@Model.CourseLists.Cost.ToString("N0") đ</span>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <strong>Tối đa học viên:</strong> <br />@Model.CourseLists.MaxStudents
+                            </div>
+                            <div class="col-6 mb-2">
+                                <strong>Hiện tại:</strong> <br />@Model.CourseLists.CurrentStudents
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Button đăng ký hoặc hủy -->
+                    @if (Model.IsEnrolled)
+                    {
+                        <form asp-action="Cancel" method="post">
+                            <input type="hidden" name="courseId" value="@Model.CourseLists.CourseId" />
+                            <button type="submit" class="btn btn-primary rounded-pill alert-danger px-4">Hủy đăng ký</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-action="Enroll" method="post">
+                            <input type="hidden" name="courseId" value="@Model.CourseLists.CourseId" />
+                            <button type="submit" class="btn btn-primary rounded-pill px-4">Đăng ký ngay</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div style="height: 100px;"></div>

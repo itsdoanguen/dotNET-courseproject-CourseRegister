@@ -1,11 +1,126 @@
-﻿@{
-	Layout = "~/Views/Shared/_LayoutStudent.cshtml"; 
+﻿@model dotNET_courseproject_CourseRegister.ViewModels.Student.StudentIndexViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
 }
-<!-- Trang chủ -->
-<section id="home" class="py-5 text-white text-center" style="background-color: #004578;">
+
+<!-- Welcome -->
+<section id="home" class="py-5 text-white text-center" style="background: linear-gradient(135deg, #004578, #1a73e8);">
     <div class="container">
         <h1 class="display-4 fw-bold">Chào mừng đến với TechSkill Academy</h1>
         <p class="lead mt-3">Nơi đào tạo IT chuyên sâu giúp bạn bứt phá sự nghiệp với công nghệ hiện đại nhất.</p>
-        <p class="mt-3">Dù bạn là người mới bắt đầu hay đã có kinh nghiệm, chúng tôi có chương trình phù hợp để giúp bạn tiến xa hơn trong sự nghiệp lập trình. Từ nền tảng vững chắc đến dự án thực tế, chúng tôi đồng hành cùng bạn.</p>
+        <p class="mt-3">Dù bạn là người mới bắt đầu hay đã có kinh nghiệm, chúng tôi có chương trình phù hợp để giúp bạn tiến xa hơn trong sự nghiệp lập trình.</p>
+    </div>
+</section>
+
+<!-- Khoá học của bạn -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="mb-4">Khoá học của bạn</h2>
+        @if (Model.StudentCourse != null && Model.StudentCourse.Any())
+        {
+            <div class="row">
+                @foreach (var course in Model.StudentCourse)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <img src="@course.CourseImage" class="card-img-top" alt="@course.CourseName">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">@course.CourseName</h5>
+                                <p class="card-text">@course.CourseDescription</p>
+                                <p class="mt-auto text-muted">Giảng viên: @course.TeacherName</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                Bạn chưa đăng ký khoá học nào. <a href="@Url.Action("CourseList", "Student")" class="alert-link">Khám phá khoá học</a> ngay!
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Tiêu đề phía trên -->
+<div class="py-5 text-center">
+    <h2 class="fw-bold">Khoá học nổi bật</h2>
+</div>
+
+<!-- Carousel Full Width -->
+<section class="py-5" style="background-color: #f8f9fa;">
+    <div class="container-fluid">
+        <div id="featuredCoursesCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner">
+                @for (int i = 0; i < Model.CourseList.Take(5).Count(); i++)
+                {
+                    var course = Model.CourseList[i];
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="card flex-row align-items-center shadow-lg p-4" style="min-height: 250px;">
+                                    <div class="col-md-4">
+                                        <img src="@course.CourseImage" class="img-fluid rounded" style="height: 200px; object-fit: cover; width: 100%;" alt="@course.CourseName">
+                                    </div>
+                                    <div class="col-md-8 ps-4 d-flex flex-column justify-content-center">
+                                        <h4 class="card-title mb-2">@course.CourseName</h4>
+                                        <p class="card-text">@course.CourseDescription</p>
+                                        <div class="mt-2">
+                                            <p class="card-text fw-bold text-primary mb-1">Chi phí: @course.Cost.ToString("N0") đ</p>
+                                            <p class="card-text text-muted">Giảng viên: @course.TeacherName</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Nút chuyển trái/phải -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#featuredCoursesCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Trước</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#featuredCoursesCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Tiếp</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+
+<!-- Đánh giá học viên -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="mb-4 text-center">Học viên nói gì về chúng tôi</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="carousel slide" id="testimonialCarousel" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active text-center">
+                            <p class="lead">"Khoá học rất bổ ích và thực tế. Mình đã tự tin xin việc sau khi học xong!"</p>
+                            <small class="text-muted">- Nguyễn Văn A</small>
+                        </div>
+                        <div class="carousel-item text-center">
+                            <p class="lead">"Giảng viên tận tình, nội dung cực kỳ cập nhật với công nghệ mới."</p>
+                            <small class="text-muted">- Trần Thị B</small>
+                        </div>
+                        <div class="carousel-item text-center">
+                            <p class="lead">"Không chỉ học kiến thức, mình còn làm được project thực tế!"</p>
+                            <small class="text-muted">- Lê Văn C</small>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
