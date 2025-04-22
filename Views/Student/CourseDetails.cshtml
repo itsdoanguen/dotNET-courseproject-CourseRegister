@@ -34,6 +34,12 @@
             <!-- Thông tin chi tiết -->
             <div class="col-lg-6">
                 <h1 class="fw-bold mb-3">@Model.CourseLists.CourseName</h1>
+
+                @if (Model.CourseLists.Status == "Inactive")
+                {
+                    <span class="badge bg-danger mb-4">Tạm dừng</span>
+                }
+
                 <p class="text-muted mb-4">Giảng viên: <span class="fw-semibold">@Model.CourseLists.TeacherName</span></p>
 
                 <div class="mb-4">

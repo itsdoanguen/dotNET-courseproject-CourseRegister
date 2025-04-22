@@ -22,7 +22,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var courseList = new StudentIndexViewModel
             {
-                CourseList = GetCourseList(),
+                CourseList = GetCourseList(userId),
                 StudentCourse = GetStudentCourseList(userId)
             };
             return View(courseList);
@@ -31,8 +31,10 @@ namespace dotNET_courseproject_CourseRegister.Controllers
         [HttpGet]
         public IActionResult CourseList()
         {
-            var courseList = GetCourseList();
-            
+
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var courseList = GetCourseList(userId);
+
             var normalCourseList = new List<CourseList>();
             var nearlyFullCourseList = new List<CourseList>();
             var fullOrClosedCourseList = new List<CourseList>();
@@ -68,7 +70,8 @@ namespace dotNET_courseproject_CourseRegister.Controllers
         [HttpGet]
         public IActionResult CourseDetails(int id)
         {
-            var courseList = GetCourseList().FirstOrDefault(c => c.CourseId == id);
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var courseList = GetCourseList(userId).FirstOrDefault(c => c.CourseId == id);
             if (courseList == null)
             {
                 return NotFound();
@@ -159,9 +162,28 @@ namespace dotNET_courseproject_CourseRegister.Controllers
 
 
         //Methods
-        private List<CourseList> GetCourseList()
+        private List<CourseList> GetCourseList(int? userId = null)
         {
-            var courses = _context.Courses.Where(c => c.Status == Course.CourseStatus.Active).ToList();
+            var coursesQuery = _context.Courses.AsQueryable();
+
+            if (userId.HasValue)
+            {
+                var enrolledCourseIds = _context.UserCourses
+                    .Where(uc => uc.UserId == userId.Value)
+                    .Select(uc => uc.CourseId)
+                    .ToList();
+
+                coursesQuery = coursesQuery.Where(c =>
+                    c.Status == Course.CourseStatus.Active ||
+                    (c.Status == Course.CourseStatus.Inactive && enrolledCourseIds.Contains(c.CourseId)));
+            }
+            else
+            {
+                coursesQuery = coursesQuery.Where(c => c.Status == Course.CourseStatus.Active);
+            }
+
+            var courses = coursesQuery.ToList();
+
             var courseList = new List<CourseList>();
             foreach (var course in courses)
             {
@@ -176,26 +198,19 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                     MaxStudents = course.MaxStudents,
                     CurrentStudents = course.CurrentStudents,
                     Duration = course.Duration,
-                    CourseImage = course.CourseImage
+                    CourseImage = course.CourseImage,
+                    Status = course.Status.ToString()
                 };
                 courseList.Add(courseViewModel);
             }
             return courseList;
         }
-        private List<CourseList> GetStudentCourseList(int id)
+        private List<CourseList> GetStudentCourseList(int userId)
         {
-            var courseList = new List<CourseList>();
-            var coursesID = _context.UserCourses.Where(c => c.UserId == id).ToList();
-            foreach (var course in coursesID)
-            {
-                var courseContext = _context.Courses.FirstOrDefault(c => c.CourseId == course.CourseId);
-                if (courseContext != null && courseContext.Status == Course.CourseStatus.Active)
-                {
-                    var courseViewModel = GetCourseList().FirstOrDefault(c => c.CourseId == courseContext.CourseId);
-                    courseList.Add(courseViewModel);
-                }
-            }
-            return courseList;
+            return GetCourseList(userId)
+                .Where(c => _context.UserCourses.Any(uc => uc.UserId == userId && uc.CourseId == c.CourseId))
+                .ToList();
         }
+
     }
 }

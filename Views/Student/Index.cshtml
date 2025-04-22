@@ -31,6 +31,12 @@
                                     <h5 class="card-title text-truncate">@course.CourseName</h5>
                                     <p class="card-text flex-grow-1">@(course.CourseDescription?.Length > 60 ? course.CourseDescription.Substring(0, 57) + "..." : course.CourseDescription)</p>
                                     <p class="mt-2 text-muted">Giảng viên: <strong>@course.TeacherName</strong></p>
+
+                                    <!-- Badge Tạm Dừng -->
+                                    @if (course.Status == "Inactive")
+                                    {
+                                        <span class="badge bg-danger">Tạm dừng</span>
+                                    }
                                 </div>
                             </div>
                         </a>
@@ -46,6 +52,7 @@
         }
     </div>
 </section>
+
 
 <div class="py-5 text-center">
     <h2 class="fw-bold">Khoá học nổi bật</h2>
