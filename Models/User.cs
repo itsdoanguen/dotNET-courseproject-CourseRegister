@@ -25,6 +25,7 @@ namespace dotNET_courseproject_CourseRegister.Models
         public DateTime? DOB { get; set; }
 
         public DateTime CreatedTime { get; set; } = DateTime.Now;
+        public double Money { get; set; } = 0.0;
 
         [Required]
         public UserRole Role { get; set; } = UserRole.Student;

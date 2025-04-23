@@ -20,6 +20,10 @@ namespace dotNET_courseproject_CourseRegister.Controllers
         public IActionResult Index()
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (userId == 0)
+            {
+                return NotFound();
+            }
             var courseList = new StudentIndexViewModel
             {
                 CourseList = GetCourseList(userId),
@@ -27,12 +31,54 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             };
             return View(courseList);
         }
+
+        //GET: Student/Profile
+        public IActionResult Profile()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var userViewModel = new StudentProfileViewModel
+            {
+                UserId = user.UserId,
+                UserName = user.UserName,
+                FullName = user.FullName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                DOB = user.DOB,
+                CreatedTime = user.CreatedTime,
+                Money = user.Money,
+                Role = user.Role.ToString(),
+                TotalEnrolledCourses = _context.UserCourses.Count(uc => uc.UserId == userId)
+            };
+            return View(userViewModel);
+        }
+
+        //GET: Student/MyCourse
+        public async Task<IActionResult> MyCourse()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (userId == 0)
+            {
+                return NotFound();
+            }
+            var courseList = GetStudentCourseList(userId);
+            return View(courseList);
+        }
+
         //GET: Student/CourseList
         [HttpGet]
         public IActionResult CourseList()
         {
 
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (userId == 0)
+            {
+                return NotFound();
+            }
             var courseList = GetCourseList(userId);
 
             var normalCourseList = new List<CourseList>();
@@ -71,6 +117,10 @@ namespace dotNET_courseproject_CourseRegister.Controllers
         public IActionResult CourseDetails(int id)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (userId == 0)
+            {
+                return NotFound();
+            }
             var courseList = GetCourseList(userId).FirstOrDefault(c => c.CourseId == id);
             if (courseList == null)
             {
@@ -144,7 +194,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 return RedirectToAction("CourseDetails", new { id });
             }
 
-            if (course.StartedTime < DateTime.Now)
+            if (course.StartedTime < DateTime.Now && course.Status == Course.CourseStatus.Active)
             {
                 TempData["ErrorMessage"] = "Khóa học đã bắt đầu. Bạn không thể hủy đăng ký!";
                 return RedirectToAction("CourseDetails", new { id });
@@ -183,6 +233,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             }
 
             var courses = coursesQuery.ToList();
+
 
             var courseList = new List<CourseList>();
             foreach (var course in courses)

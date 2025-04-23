@@ -1,0 +1,113 @@
+﻿@model dotNET_courseproject_CourseRegister.ViewModels.Student.StudentProfileViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    ViewData["Title"] = "Hồ sơ cá nhân";
+}
+
+<section class="py-5">
+    <div class="container">
+
+        <h2 class="text-center mb-5 fw-bold">Hồ sơ cá nhân</h2>
+
+        <div class="row g-4">
+
+            <!-- Thông tin cá nhân -->
+            <div class="col-12">
+                <div class="card shadow-sm rounded-4">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
+                        <h5 class="mb-0">Thông tin cá nhân</h5>
+                        <a href="@Url.Action("EditProfile", "Student")" class="text-white">
+                            <i class="bi bi-gear-fill"></i>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <label class="col-md-3 fw-semibold">Họ và tên:</label>
+                            <div class="col-md-9">
+                                @(Model.FullName ?? "Chưa cập nhật")
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-md-3 fw-semibold">Số điện thoại:</label>
+                            <div class="col-md-9">
+                                @(Model.PhoneNumber ?? "Chưa cập nhật")
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-md-3 fw-semibold">Ngày sinh:</label>
+                            <div class="col-md-9">
+                                @(Model.DOB?.ToString("dd/MM/yyyy") ?? "Chưa cập nhật")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thông tin tài khoản -->
+            <div class="col-12">
+                <div class="card shadow-sm rounded-4">
+                    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center rounded-top-4">
+                        <h5 class="mb-0">Thông tin tài khoản</h5>
+                        <a href="@Url.Action("EditAccount", "Student")" class="text-white">
+                            <i class="bi bi-gear-fill"></i>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <label class="col-md-3 fw-semibold">Tên đăng nhập:</label>
+                            <div class="col-md-9">
+                                @Model.UserName
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-md-3 fw-semibold">Email:</label>
+                            <div class="col-md-9">
+                                @Model.Email
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-md-3 fw-semibold">Ngày tham gia:</label>
+                            <div class="col-md-9">
+                                @Model.CreatedTime.ToString("dd/MM/yyyy")
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-md-3 fw-semibold">Vai trò:</label>
+                            <div class="col-md-9">
+                                @Model.Role
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-md-3 fw-semibold">Số dư tài khoản:</label>
+                            <div class="col-md-9 text-primary fw-bold">
+                                @Model.Money.ToString("N0") đ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thống kê khóa học -->
+            <div class="col-12">
+                <div class="card shadow-sm rounded-4">
+                    <div class="card-header bg-warning text-dark rounded-top-4">
+                        <h5 class="mb-0">Thống kê khóa học</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <label class="col-md-3 fw-semibold">Số khóa học đã đăng ký:</label>
+                            <div class="col-md-9">
+                                @Model.TotalEnrolledCourses
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<div style="height: 50px;"></div>
