@@ -69,6 +69,13 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             return View(courseList);
         }
 
+        //GET: Student/Settings
+        public IActionResult Settings()
+        {
+
+            return View();
+        }
+
         //GET: Student/CourseList
         [HttpGet]
         public IActionResult CourseList()

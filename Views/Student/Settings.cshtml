@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Cài đặt tài khoản";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+}
+
+<h2 class="text-primary">Cài đặt tài khoản</h2>
+<div class="card mt-4">
+    <div class="card-body">
+        <h4 class="card-title">Thông tin cá nhân</h4>
+        <p>Chỉnh sửa thông tin hồ sơ, tên, số điện thoại, ngày sinh,...</p>
+        <a class="btn btn-outline-primary" asp-controller="Account" asp-action="EditProfile">
+            Chỉnh sửa hồ sơ
+        </a>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <h4 class="card-title">Thông tin đăng nhập</h4>
+        <p>Thay đổi tên đăng nhập, email (cần xác minh mật khẩu).</p>
+        <a class="btn btn-outline-secondary" asp-controller="Account" asp-action="EditAccount">
+            Chỉnh sửa tài khoản
+        </a>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <h4 class="card-title">Bảo mật</h4>
+        <p>Thay đổi mật khẩu đăng nhập hiện tại.</p>
+        <a class="btn btn-outline-danger" asp-controller="Account" asp-action="ChangePassword">
+            Đổi mật khẩu
+        </a>
+    </div>
+</div>

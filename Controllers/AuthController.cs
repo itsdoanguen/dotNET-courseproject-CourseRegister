@@ -70,14 +70,14 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 return View(model);
             }
 
-            var usedEmail = _context.Users.FirstOrDefault(s => s.Email == model.Email);
+            var usedEmail = _context.Users.AsEnumerable().FirstOrDefault(s => s.Email == model.Email);
             if (usedEmail != null)
             {
                 ModelState.AddModelError("Email", "Email này đã được sử dụng");
                 return View(model);
             }
 
-            var usedUsername = _context.Users.FirstOrDefault(s => s.UserName == model.UserName);
+            var usedUsername = _context.Users.AsEnumerable().FirstOrDefault(s => s.UserName == model.UserName);
             if (usedUsername != null)
             {
                 ModelState.AddModelError("UserName", "Tên tài khoản này đã được sử dụng");
@@ -129,7 +129,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 return View(model);
             }
 
-            var user = _context.Users.FirstOrDefault(s => s.UserName == model.UserNameOrEmail || s.Email == model.UserNameOrEmail);
+            var user = _context.Users.AsEnumerable().FirstOrDefault(s => s.UserName == model.UserNameOrEmail || s.Email == model.UserNameOrEmail);
             if (user == null)
             {
                 ModelState.AddModelError("UserNameOrEmail", "Tên tài khoản hoặc email không tồn tại");

@@ -1,0 +1,39 @@
+﻿@model dotNET_courseproject_CourseRegister.ViewModels.Student.StudentEditorViewModel
+
+@{
+    ViewData["Title"] = "Chỉnh sửa tài khoản";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+}
+
+<div class="container" style="max-width: 600px; margin-top: 40px;">
+    <div class="card shadow p-4" style="border-radius: 20px;">
+        <h2 class="text-center mb-4" style="font-weight: bold;">Chỉnh sửa tài khoản</h2>
+
+        <form asp-action="EditAccount" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="UserName" class="form-label" style="font-weight: 600;"></label>
+                <input asp-for="UserName" class="form-control" placeholder="Nhập tên đăng nhập mới..." />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label" style="font-weight: 600;"></label>
+                <input asp-for="Email" type="email" class="form-control" placeholder="Nhập email mới..." />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Password" class="form-label" style="font-weight: 600;"></label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Nhập mật khẩu xác nhận..." />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary" style="width: 48%;">Lưu thay đổi</button>
+                <a asp-controller="Student" asp-action="Profile" class="btn btn-danger" style="width: 48%;">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
