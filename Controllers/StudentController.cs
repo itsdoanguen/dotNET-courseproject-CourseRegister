@@ -167,7 +167,19 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 TempData["ErrorMessage"] = "Khóa học đã bắt đầu. Bạn không thể đăng ký!";
                 return RedirectToAction("CourseDetails", new { id });
             }
+
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userContext = _context.Users.FirstOrDefault(u => u.UserId == userId);
+            if (userContext == null)
+            {
+                return NotFound();
+            }
+            if (userContext.Money < course.Cost)
+            {
+                TempData["ErrorMessage"] = "Số dư tài khoản không đủ để đăng ký khóa học này!";
+                return RedirectToAction("CourseDetails", new { id });
+            }
+
             var userCourse = new User_Course
             {
                 CourseId = id,
@@ -178,6 +190,8 @@ namespace dotNET_courseproject_CourseRegister.Controllers
 
             course.CurrentStudents++;
             _context.Courses.Update(course);
+
+            userContext.Money -= course.Cost;
             await _context.SaveChangesAsync();
 
             TempData["SuccessMessage"] = "Đăng ký khóa học thành công!";
@@ -207,6 +221,12 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 return RedirectToAction("CourseDetails", new { id });
             }
 
+            var userContext = _context.Users.FirstOrDefault(u => u.UserId == userId);
+            if (userContext == null)
+            {
+                return NotFound();
+            }
+            userContext.Money += course.Cost;
 
             _context.UserCourses.Remove(userCourse);
             course.CurrentStudents--;
@@ -214,9 +234,46 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             await _context.SaveChangesAsync();
 
             TempData["SuccessMessage"] = "Hủy đăng ký khóa học thành công!";
+
+            if (course.Status == Course.CourseStatus.Inactive)
+            {
+                return RedirectToAction("CourseList"); 
+            }
             return RedirectToAction("CourseDetails", new { id });
         }
-
+        //GET: Student/Deposit
+        [HttpGet]
+        public IActionResult Deposit()
+        {
+            return View();
+        }
+        //POST: Student/Deposit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Deposit(double money)
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            if (money <= 0)
+            {
+                TempData["ErrorMessage"] = "Số tiền nạp không hợp lệ!";
+                return RedirectToAction("Profile");
+            }
+            if (user.Money + money > 1000000000)
+            {
+                TempData["ErrorMessage"] = "Số dư tài khoản không được vượt quá 1 tỷ đồng!";
+                return RedirectToAction("Profile");
+            }
+            user.Money += money;
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Nạp tiền thành công!";
+            return RedirectToAction("Profile");
+        }
 
         //Methods
         private List<CourseList> GetCourseList(int? userId = null)

@@ -16,7 +16,7 @@
         public string TeacherName { get; set; }
         public string CourseDescription { get; set; }
         public DateTime StartedTime { get; set; }
-        public int Cost { get; set; }
+        public double Cost { get; set; }
         public int MaxStudents { get; set; }
         public int CurrentStudents { get; set; }
         public int Duration { get; set; }

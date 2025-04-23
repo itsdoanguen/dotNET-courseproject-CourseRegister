@@ -20,7 +20,7 @@ namespace dotNET_courseproject_CourseRegister.Models
         public DateTime StartedTime { get; set; }
 
         [Required]
-        public int Cost { get; set; }
+        public double Cost { get; set; }
 
         [Required]
         public int MaxStudents { get; set; }

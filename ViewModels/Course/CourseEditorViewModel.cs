@@ -21,7 +21,7 @@ namespace dotNET_courseproject_CourseRegister.ViewModels.Course
         [Required(ErrorMessage = "Không được để trống học phí")]
         [Range(0, int.MaxValue, ErrorMessage = "Học phí không hợp lệ")]
         [Display(Name = "Học phí")]
-        public int Cost { get; set; }
+        public double Cost { get; set; }
         [Required(ErrorMessage = "Không được để trống số lượng học viên tối đa")]
         [Range(0, 60, ErrorMessage = "Số lượng học viên tối đa không hợp lệ")]
         [Display(Name = "Số lượng học viên tối đa")]
