@@ -17,6 +17,8 @@
 
         public List<EnrolledUserViewModel> MostEnrollingUser { get; set; }
         public List<CourseDashboardViewModel> MostEnrolledCourses { get; set; }
+
+        public List<CourseDashboardViewModel> AllCourseRevenue { get; set; } = new List<CourseDashboardViewModel>();
     }
 
     public class EnrolledUserViewModel
@@ -29,5 +31,6 @@
     {
         public string CourseName { get; set; }
         public int TotalEnrolledUsers { get; set; }
+        public double? CourseRevenue { get; set; }
     }
 }

@@ -100,8 +100,8 @@ namespace dotNET_courseproject_CourseRegister.Controllers
 
             //Courses
             dashboardViewModel.TotalCourses = courseContext.Count();
-            dashboardViewModel.TotalActiveCourses = courseContext.Count(c => c.Status == Models.Course.CourseStatus.Active);
-            dashboardViewModel.TotalInactiveCourses = courseContext.Count(c => c.Status == Models.Course.CourseStatus.Inactive);
+            dashboardViewModel.TotalActiveCourses = courseContext.Count(c => c.Status == Course.CourseStatus.Active);
+            dashboardViewModel.TotalInactiveCourses = courseContext.Count(c => c.Status == Course.CourseStatus.Inactive);
             //Enrolled Users
             dashboardViewModel.TotalEnrolledUsers = userCourseContext.Select(uc => uc.UserId).Distinct().Count();
 
@@ -138,9 +138,21 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 .OrderByDescending(c => c.TotalEnrolledUsers)
                 .Take(5)
                 .ToList();
-
             dashboardViewModel.MostEnrollingUser = mostEnrollingUsers;
             dashboardViewModel.MostEnrolledCourses = mostEnrolledCourses;
+
+
+            //All Course Revenue
+            foreach (var course in courseContext)
+            {
+                var courseRevenue = new CourseDashboardViewModel
+                {
+                    CourseName = course.CourseName,
+                    TotalEnrolledUsers = userCourseContext.Count(uc => uc.CourseId == course.CourseId),
+                    CourseRevenue = userCourseContext.Where(uc => uc.CourseId == course.CourseId).Sum(uc => _context.Courses.FirstOrDefault(c => c.CourseId == uc.CourseId).Cost)
+                };
+                dashboardViewModel.AllCourseRevenue.Add(courseRevenue);
+            }
 
             return View(dashboardViewModel);
         }

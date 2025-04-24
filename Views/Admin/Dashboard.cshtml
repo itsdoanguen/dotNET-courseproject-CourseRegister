@@ -101,3 +101,30 @@
         </div>
     </div>
 </div>
+
+<hr class="my-5" />
+
+<div class="container mt-4">
+    <div class="col-md-12">
+        <h4>Doanh thu từng khóa học</h4>
+        <table class="table table-bordered table-striped shadow-sm rounded">
+            <thead class="table-warning">
+                <tr>
+                    <th>Tên khóa học</th>
+                    <th>Số lượt đăng ký</th>
+                    <th>Doanh thu</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in Model.AllCourseRevenue.OrderByDescending(c => c.CourseRevenue))
+                {
+                    <tr>
+                        <td>@course.CourseName</td>
+                        <td>@course.TotalEnrolledUsers</td>
+                        <td>@(course.CourseRevenue.HasValue ? course.CourseRevenue.Value.ToString("N0") + " đ" : "0 đ")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
