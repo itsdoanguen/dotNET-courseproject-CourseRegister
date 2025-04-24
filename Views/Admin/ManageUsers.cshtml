@@ -22,8 +22,10 @@
 						<th>Số điện thoại</th>
 						<th>Ngày sinh</th>
 						<th>Ngày tạo</th>
-						<th>Số khóa học đã đăng ký</th>
+						<th>Số khóa học</th>
 						<th>Role</th>
+						<th>Tình trạng</th>
+						<th>Chỉnh sửa</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -45,6 +47,16 @@
 								<td>
 									@(user.UserRole == dotNET_courseproject_CourseRegister.Models.User.UserRole.Student ? "Học viên" : "Admin")
 								</td>
+								<td>@(user.IsActive == true ? "Hoạt động" : "Bị khóa")</td>
+
+								<td>
+									<form asp-action="ViewUser" asp-route-id="@user.UserId" method="get" style="display:inline;">
+										<button type="submit" class="btn btn-link p-0" title="Xem chi tiết">
+											<i class="bi bi-gear-fill"></i>
+										</button>
+									</form>
+								</td>
+
 							</tr>
 							index++;
 						}

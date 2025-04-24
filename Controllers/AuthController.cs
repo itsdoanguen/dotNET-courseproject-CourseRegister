@@ -93,7 +93,8 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 PhoneNumber = model.PhoneNumber,
                 DOB = model.DOB,
                 Role = Models.User.UserRole.Student,
-                CreatedTime = DateTime.Now
+                CreatedTime = DateTime.Now,
+                IsActive = true
             };
 
             _context.Users.Add(user);
@@ -138,6 +139,11 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             if (!BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
             {
                 ModelState.AddModelError("Password", "Mật khẩu không đúng");
+                return View(model);
+            }
+            if (!user.IsActive)
+            {
+                TempData["ErrorMessage"] = "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ với quản trị viên để biết thêm thông tin.";
                 return View(model);
             }
 

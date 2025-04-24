@@ -14,5 +14,6 @@ namespace dotNET_courseproject_CourseRegister.ViewModels.Admin
         public DateTime CreatedTime { get; set; }
         public UserRole UserRole { get; set; }
         public int TotalCourses { get; set; }
+        public bool IsActive { get; set; }
     }
 }

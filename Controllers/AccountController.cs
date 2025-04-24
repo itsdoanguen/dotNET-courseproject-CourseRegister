@@ -164,7 +164,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                 ModelState.AddModelError("ConfirmPassword", "Mật khẩu xác nhận không khớp.");
                 return View(model);
             }
-            user.Password = model.NewPassword;
+            user.Password = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
             TempData["SuccessMessage"] = "Cập nhật mật khẩu thành công!";

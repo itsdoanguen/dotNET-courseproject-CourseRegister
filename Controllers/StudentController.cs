@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using dotNET_courseproject_CourseRegister.Attributes;
 using dotNET_courseproject_CourseRegister.Data;
 using dotNET_courseproject_CourseRegister.Models;
 using dotNET_courseproject_CourseRegister.ViewModels.Student;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace dotNET_courseproject_CourseRegister.Controllers
 {
     [Authorize(Roles = "Student")]
+    [AuthorizeStudent]
     public class StudentController : Controller
     {
         private readonly ApplicationDbContext _context;
