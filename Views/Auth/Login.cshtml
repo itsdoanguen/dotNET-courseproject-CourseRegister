@@ -9,6 +9,15 @@
 <div class="d-flex justify-content-center align-items-center min-vh-100" style="background: linear-gradient(to right, #6a11cb, #2575fc);">
     <div class="card p-5 shadow-lg" style="max-width: 420px; width: 100%; border-radius: 16px; background: #fff;">
         <h2 class="text-center mb-4 fw-bold text-primary">Đăng nhập</h2>
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                @TempData["ErrorMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
         <form method="post" asp-action="Login" novalidate>
             <div class="form-floating mb-3">
                 <input asp-for="UserNameOrEmail" class="form-control" id="UserNameOrEmail" placeholder="Tên tài khoản hoặc Email" />

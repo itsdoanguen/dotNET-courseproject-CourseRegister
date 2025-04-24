@@ -29,6 +29,8 @@ namespace dotNET_courseproject_CourseRegister.Models
 
         [Required]
         public UserRole Role { get; set; } = UserRole.Student;
+        [Required]
+        public bool IsActive { get; set; } = true;
 
         public ICollection<User_Course>? EnrolledCourses { get; set; }
 

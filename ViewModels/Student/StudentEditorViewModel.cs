@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using dotNET_courseproject_CourseRegister.Attributes;
 
 namespace dotNET_courseproject_CourseRegister.ViewModels.Student
 {
@@ -28,6 +29,8 @@ namespace dotNET_courseproject_CourseRegister.ViewModels.Student
         public string? OldPassword { get; set; }
 
         [Display(Name = "Mật khẩu mới")]
+        [DataType(DataType.Password)]
+        [PasswordComplexity]
         public string? NewPassword { get; set; }
 
         [Display(Name = "Xác nhận mật khẩu mới")]

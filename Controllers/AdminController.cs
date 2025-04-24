@@ -3,6 +3,7 @@ using dotNET_courseproject_CourseRegister.ViewModels.Admin;
 using dotNET_courseproject_CourseRegister.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 
 namespace dotNET_courseproject_CourseRegister.Controllers
 {
@@ -14,11 +15,11 @@ namespace dotNET_courseproject_CourseRegister.Controllers
         {
             _context = context;
         }
+        //GET: Admin/Index
         public IActionResult Index()
         {
             return View();
         }
-        //GET: Admin/Reports
 
         //GET: Admin/ManageCourses
         [HttpGet]
@@ -61,6 +62,68 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             var usersList = GetUserList();
             return View(usersList);
         }
+        //GET: Admin/ViewUser
+        [HttpGet]
+        public IActionResult ViewUser(int id)
+        {
+            var user = GetUserList().FirstOrDefault(u => u.UserId == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+        //POST: Admin/ResetPassword
+        [HttpPost]
+        public IActionResult ResetPassword(int id)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserId == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            if (user.Role == Models.User.UserRole.Admin)
+            {
+                TempData["ErrorMessage"] = $"Không thể đặt lại mật khẩu cho tài khoản Admin!";
+                return RedirectToAction("ViewUser", new { id });
+            }
+
+
+            string newPassword = GenerateRandomPassword();
+            user.Password = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            _context.SaveChanges();
+
+            TempData["SuccessMessage"] = $"Mật khẩu đã được đặt lại thành công: {newPassword}";
+            return RedirectToAction("ViewUser",new {id});
+        }
+        //POST: Admin/ManageStatus
+        [HttpPost]
+        public IActionResult ManageStatus(int id)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserId == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            if (user.Role == Models.User.UserRole.Admin)
+            {
+                TempData["ErrorMessage"] = $"Không thể thay đổi trạng thái tài khoản Admin!";
+                return RedirectToAction("ViewUser", new { id });
+            }
+
+            user.IsActive = !user.IsActive;
+            _context.SaveChanges();
+
+            TempData["SuccessMessage"] = $"Trạng thái tài khoản đã được cập nhật thành công!";
+            return RedirectToAction("ViewUser", new { id });
+        }
+        private string GenerateRandomPassword(int length = 6)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
 
         private List<AdminManageUserViewModel> GetUserList()
         {
@@ -68,6 +131,11 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             var userList = new List<AdminManageUserViewModel>();
             foreach (var user in users)
             {
+                if (user.Role == Models.User.UserRole.Admin)
+                {
+                    continue;
+                }
+
                 var userViewModel = new AdminManageUserViewModel
                 {
                     UserId = user.UserId,
@@ -78,7 +146,8 @@ namespace dotNET_courseproject_CourseRegister.Controllers
                     DOB = user.DOB,
                     CreatedTime = user.CreatedTime,
                     UserRole = user.Role,
-                    TotalCourses = _context.UserCourses.Count(uc => uc.UserId == user.UserId)
+                    TotalCourses = _context.UserCourses.Count(uc => uc.UserId == user.UserId),
+                    IsActive = user.IsActive
                 };
                 userList.Add(userViewModel);
             }
@@ -91,6 +160,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
         public IActionResult Dashboard()
         {
             var dashboardViewModel = new AdminDashboardViewModel();
+
             var userContext = _context.Users.ToList();
             var courseContext = _context.Courses.ToList();
             var userCourseContext = _context.UserCourses.ToList();
@@ -142,7 +212,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
             dashboardViewModel.MostEnrolledCourses = mostEnrolledCourses;
 
 
-            //All Course Revenue
+            //Revenue
             foreach (var course in courseContext)
             {
                 var courseRevenue = new CourseDashboardViewModel
