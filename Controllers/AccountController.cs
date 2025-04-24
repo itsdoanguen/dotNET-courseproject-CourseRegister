@@ -1,10 +1,12 @@
 ﻿using System.Security.Claims;
 using dotNET_courseproject_CourseRegister.Data;
 using dotNET_courseproject_CourseRegister.ViewModels.Student;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dotNET_courseproject_CourseRegister.Controllers
 {
+    [Authorize(Roles = "Student")]
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -1,4 +1,7 @@
-﻿namespace dotNET_courseproject_CourseRegister.ViewModels.Admin
+﻿using Microsoft.AspNetCore.Identity;
+using static dotNET_courseproject_CourseRegister.Models.User;
+
+namespace dotNET_courseproject_CourseRegister.ViewModels.Admin
 {
     public class AdminManageUserViewModel
     {
@@ -9,7 +12,7 @@
         public string PhoneNumber { get; set; }
         public DateTime? DOB { get; set; }
         public DateTime CreatedTime { get; set; }
-
+        public UserRole UserRole { get; set; }
         public int TotalCourses { get; set; }
     }
 }

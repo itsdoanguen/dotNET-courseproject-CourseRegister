@@ -1,0 +1,103 @@
+﻿@model dotNET_courseproject_CourseRegister.ViewModels.Admin.AdminDashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Tổng quan hệ thống</h2>
+
+    <!-- Tổng quan -->
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary shadow rounded-3">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng học viên</h5>
+                    <h3>@Model.TotalUsers</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info shadow rounded-3">
+                <div class="card-body">
+                    <h5 class="card-title">Học viên đã đăng ký học</h5>
+                    <h3>@Model.TotalEnrolledUsers</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success shadow rounded-3">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng khóa học</h5>
+                    <h3>@Model.TotalCourses</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning shadow rounded-3">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng doanh thu</h5>
+                    <h3>@Model.TotalRevenue.ToString("N0") đ</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tỷ lệ khóa học -->
+    <div class="my-5">
+        <h4>Tình trạng khóa học</h4>
+        <div class="progress mb-3" style="height: 24px;">
+            <div class="progress-bar bg-success" style="width: @Model.ActiveCourseRatio%">Hoạt động: @Model.TotalActiveCourses.ToString() (@Model.ActiveCourseRatio.ToString("0.0")%)</div>
+            <div class="progress-bar bg-danger" style="width: @Model.InactiveCourseRatio%">Tạm ngưng: @Model.TotalInactiveCourses.ToString() (@Model.InactiveCourseRatio.ToString("0.0")%)</div>
+        </div>
+    </div>
+
+    <!-- Top người học -->
+    <div class="row my-5">
+        <div class="col-md-6">
+            <h4>Top 5 học viên đăng ký nhiều nhất</h4>
+            <table class="table table-striped shadow-sm rounded">
+                <thead class="table-light">
+                    <tr>
+                        <th>Tên người dùng</th>
+                        <th>Email</th>
+                        <th>Số khóa học</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.MostEnrollingUser)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>@user.Email</td>
+                            <td>@user.TotalCourse</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Top khóa học -->
+        <div class="col-md-6">
+            <h4>Top 5 khóa học có nhiều người học</h4>
+            <table class="table table-striped shadow-sm rounded">
+                <thead class="table-light">
+                    <tr>
+                        <th>Tên khóa học</th>
+                        <th>Số người học</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var course in Model.MostEnrolledCourses)
+                    {
+                        <tr>
+                            <td>@course.CourseName</td>
+                            <td>@course.TotalEnrolledUsers</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

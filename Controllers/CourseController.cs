@@ -17,6 +17,7 @@ namespace dotNET_courseproject_CourseRegister.Controllers
         }
         //GET: Course/Details
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CourseDetails(int id)
         {
             var course = await _context.Courses

@@ -1,0 +1,121 @@
+﻿@model dotNET_courseproject_CourseRegister.ViewModels.Admin.AdminReportViewModel
+@{
+    ViewData["Title"] = "Báo cáo hệ thống";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="mt-3">Báo cáo hệ thống</h2>
+
+<form method="get" asp-action="Reports" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label for="fromD" class="form-label">Từ ngày</label>
+        <input type="date" name="fromD" class="form-control" value="@ViewBag.FromDate" />
+    </div>
+    <div class="col-md-3">
+        <label for="toD" class="form-label">Đến ngày</label>
+        <input type="date" name="toD" class="form-control" value="@ViewBag.ToDate" />
+    </div>
+    <div class="col-md-3 align-self-end d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Lọc dữ liệu</button>
+
+        <a class="btn btn-outline-secondary"
+           href="@Url.Action("ReportsChart", "Admin", new { fromD = ViewBag.FromDate, toD = ViewBag.ToDate })">
+            Xem theo biểu đồ
+        </a>
+    </div>
+</form>
+
+
+
+<div class="row my-3">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Người dùng mới</h5>
+                <p class="card-text display-6">@Model.TotalNewUsers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Lượt đăng ký khóa học</h5>
+                <p class="card-text display-6">@Model.TotalErroled</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Tổng doanh thu</h5>
+                <p class="card-text display-6">@Model.TotalRevenue.ToString("N0") đ</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Biểu đồ hoặc bảng chi tiết -->
+<div class="row">
+    <div class="col-md-12">
+        <h4>Người dùng mới theo ngày</h4>
+        <table class="table table-bordered table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>Ngày</th>
+                    <th>Số lượng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.NewUsersPerDay)
+                {
+                    <tr>
+                        <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                        <td>@item.Count</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-12 mt-4">
+        <h4>Lượt đăng ký khóa học theo ngày</h4>
+        <table class="table table-bordered table-striped">
+            <thead class="table-success">
+                <tr>
+                    <th>Ngày</th>
+                    <th>Số lượt đăng ký</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ErroledPerDays)
+                {
+                    <tr>
+                        <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                        <td>@item.Count</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-12 mt-4">
+        <h4>Doanh thu theo ngày</h4>
+        <table class="table table-bordered table-striped">
+            <thead class="table-warning">
+                <tr>
+                    <th>Ngày</th>
+                    <th>Doanh thu</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.RevenuePerDays)
+                {
+                    <tr>
+                        <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                        <td>@item.Revenue.ToString("N0") đ</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
